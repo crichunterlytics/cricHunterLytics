@@ -5,6 +5,18 @@ const connection = mysql.createConnection({
     database: 'crichunterlytics_staging_db',
     password: 'Cric@Hunter0824'
 });
-connection.connect();
-module.exports = connection;
+// connection.connect();
 
+connection.connect((err) => {
+    if (err) {
+        console.error('Database connection failed:', err);
+        return;
+    }
+    console.log('Connected to the database.');
+});
+
+connection.on('error', (err) => {
+    console.error('Database error:', err);
+});
+
+module.exports = connection;
