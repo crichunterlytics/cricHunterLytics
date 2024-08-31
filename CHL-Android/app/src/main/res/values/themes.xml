@@ -5,5 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.AndroidCHL" parent="Base.Theme.AndroidCHL" />
+    <style name="Theme.AndroidCHL" parent="Base.Theme.AndroidCHL" >
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
 </resources>
