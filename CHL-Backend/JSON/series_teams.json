@@ -1,0 +1,47 @@
+{
+    "data": [
+        {
+            "team_id": 159,
+            "team_name": "Guyana Amazon Warriors",
+            "image_id": 172227,
+            "squad_id": 47973,
+            "series_id": 7855
+        },
+        {
+            "team_id": 262,
+            "team_name": "Barbados Royals",
+            "image_id": 210485,
+            "squad_id": 47960,
+            "series_id": 7855
+        },
+        {
+            "team_id": 263,
+            "team_name": "Saint Lucia Kings",
+            "image_id": 172316,
+            "squad_id": 47964,
+            "series_id": 7855
+        },
+        {
+            "team_id": 271,
+            "team_name": "Trinbago Knight Riders",
+            "image_id": 172325,
+            "squad_id": 47962,
+            "series_id": 7855
+        },
+        {
+            "team_id": 302,
+            "team_name": "St Kitts and Nevis Patriots",
+            "image_id": 172351,
+            "squad_id": 47961,
+            "series_id": 7855
+        },
+        {
+            "team_id": 1978,
+            "team_name": "Antigua and Barbuda Falcons",
+            "image_id": 507236,
+            "squad_id": 47967,
+            "series_id": 7855
+        }
+    ],
+    "err": false
+}

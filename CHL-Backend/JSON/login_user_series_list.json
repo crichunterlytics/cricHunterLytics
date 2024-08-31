@@ -1,0 +1,25 @@
+{
+    "data": [
+        {
+            "series_id": 7855,
+            "series_name": "Caribbean Premier League 2024",
+            "start_date": 1724889600000,
+            "end_date": 1728172800000,
+            "series_type": "league",
+            "series_header_text": "AUGUST 2024",
+            "id": 2,
+            "user_id": 2
+        },
+        {
+            "series_id": 8393,
+            "series_name": "Bangladesh tour of India, 2024",
+            "start_date": 1726704000000,
+            "end_date": 1728691200000,
+            "series_type": "international",
+            "series_header_text": "SEPTEMBER 2024",
+            "id": 3,
+            "user_id": 2
+        }
+    ],
+    "err": false
+}

@@ -1,0 +1,37 @@
+{
+    "data": [
+        {
+            "series_id": 7855,
+            "series_name": "Caribbean Premier League 2024",
+            "start_date": 1724889600000,
+            "end_date": 1728172800000,
+            "series_type": "league",
+            "series_header_text": "AUGUST 2024"
+        },
+        {
+            "series_id": 8393,
+            "series_name": "Bangladesh tour of India, 2024",
+            "start_date": 1726704000000,
+            "end_date": 1728691200000,
+            "series_type": "international",
+            "series_header_text": "SEPTEMBER 2024"
+        },
+        {
+            "series_id": 8552,
+            "series_name": "Australia tour of Scotland, 2024",
+            "start_date": 1725408000000,
+            "end_date": 1725667200000,
+            "series_type": "international",
+            "series_header_text": "SEPTEMBER 2024"
+        },
+        {
+            "series_id": 8643,
+            "series_name": "CSA T20 Challenge 2024",
+            "start_date": 1727395200000,
+            "end_date": 1729987200000,
+            "series_type": "league",
+            "series_header_text": "SEPTEMBER 2024"
+        }
+    ],
+    "err": false
+}
