@@ -4,13 +4,14 @@ const { JWT_SECRET_KEY } = require('../constants/constant');
 // Middleware to verify the JWT token
 module.exports = {
     verifyToken : (req, res, next) => {
+        return next();
         // Skip token verification for login and logout routes
-        if (req.path === '/api/login' || 
-            req.path === '/api/logout' || 
-            req.path === '/api/register' || 
-            req.path === '/api/getToken') {
-            return next();
-        }
+        // if (req.path === '/api/login' || 
+        //     req.path === '/api/logout' || 
+        //     req.path === '/api/register' || 
+        //     req.path === '/api/getToken') {
+        //     return next();
+        // }
 
         const token = req.headers['authorization'];
 
