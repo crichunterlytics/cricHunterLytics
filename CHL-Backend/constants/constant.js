@@ -4,9 +4,9 @@ const JWT_TOKEN_EXPIRY_TIME = '15d';
 
 //Database : Available Tables Constant
 const CHL_USERS = 'chl_users';
-const CHL_SERIES = 'chl_Series';
+const CHL_SERIES = 'chl_series';
 const CHL_SERIES_TEAMS = 'chl_series_teams';
-const CHL_USER_SERIES = 'User_Series';
+const CHL_USER_SERIES = 'user_series';
 const CHL_TEAM_SQUAD = "team_squad_players";
 const CHL_SERIES_MATCHES = "series_matches_list";
 const CHL_PLAYERS_MATCH_STATS = "player_match_stats";
