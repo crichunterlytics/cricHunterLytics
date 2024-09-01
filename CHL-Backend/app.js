@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 */
 const cors = require('cors');
 const mildInterpreterToken = require('./middleware/token_interpreter.js'); 
+const path = require('path');
 
 
 const app = express();
@@ -42,5 +43,7 @@ app.use('/api/series/', router5);
 app.use('/api/match/', router6);
 app.use('/api/team/', router7);
 
+// Serve static files from the "images" directory
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.listen(PORT, () => console.log('Server is running on port:'+ PORT));
