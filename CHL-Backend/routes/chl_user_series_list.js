@@ -9,7 +9,6 @@ router.get(`${USER_SERIES_LIST}`, (req, res, next) => {
       [],
       function (error, results, fields) {
         if (error) {
-          throw error;
           return res.status(ERROR_STATUS_CODE).send({
             msg: error,
             err: true,

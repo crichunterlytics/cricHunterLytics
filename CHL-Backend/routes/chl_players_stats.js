@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {SUCCESS_STATUS_CODE,PLAYERS_STATS_PERTEAM, PLAYERS_STATS_TWOTEAM} = require("../constants/constant.js");
+const {SUCCESS_STATUS_CODE,PLAYERS_STATS_PERTEAM, PLAYERS_STATS_TWOTEAM, MATCH_PLAYERS_STATS, ERROR_STATUS_CODE} = require("../constants/constant.js");
 const db = require("../lib/chlDb.js");
 
 // API : Get All team players stats as per series and team id 
@@ -23,7 +23,6 @@ router.get(`${PLAYERS_STATS_PERTEAM}`, (req, res, next) => {
       [],
       function (error, results, fields) {
         if (error) {
-          throw error;
           return res.status(ERROR_STATUS_CODE).send({
             msg: error,
             err: true,
@@ -60,7 +59,6 @@ router.post(`${PLAYERS_STATS_TWOTEAM}`, (req, res, next) => {
       [],
       function (error, results, fields) {
         if (error) {
-          throw error;
           return res.status(ERROR_STATUS_CODE).send({
             msg: error,
             err: true,
@@ -74,6 +72,60 @@ router.post(`${PLAYERS_STATS_TWOTEAM}`, (req, res, next) => {
         });
       }
     );
+});
+
+// POST API: get series teams list - "/series/squad/list"
+router.post(`${MATCH_PLAYERS_STATS}`, (req, res, next) => {
+  const paramsArray = req.body; // Expecting an array of { series_id, squad_id }
+
+  // Validate the input
+  if (!Array.isArray(paramsArray) || paramsArray.length === 0) {
+    return res.status(400).send({
+      msg: 'Invalid input, expected an array of { series_id, squad_id }',
+      err: true,
+      status_code: 400,
+    });
+  }
+
+  // Create an array of promises for each database query
+  const promises = paramsArray.map((param) => {
+    const { series_id, match_id } = param;
+
+    // Return a promise for each query
+    return new Promise((resolve, reject) => {
+      db.query(
+        `SELECT * FROM player_match_stats WHERE series_id = ? AND match_id = ?`,
+        [series_id, match_id],
+        (error, results) => {
+          if (error) {
+            return reject(error);
+          }
+          // If data is found, return result as true; otherwise, false
+          resolve({
+            match_id,
+            result: results.length > 0, // true if data exists, false otherwise
+          });
+        }
+      );
+    });
+  });
+
+  // Execute all promises and send the response
+  Promise.all(promises)
+    .then((results) => {
+      return res.status(SUCCESS_STATUS_CODE).send({
+        data: results,
+        err: false,
+        status_code: SUCCESS_STATUS_CODE,
+      });
+    })
+    .catch((error) => {
+      return res.status(ERROR_STATUS_CODE).send({
+        msg: error.message,
+        err: true,
+        status_code: ERROR_STATUS_CODE,
+      });
+    });
 });
 
 module.exports = router;

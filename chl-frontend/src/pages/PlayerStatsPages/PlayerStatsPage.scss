@@ -1,0 +1,87 @@
+@import '../../styles/variables';
+
+.imp-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: $primary-color;
+    border-color: $primary-color;
+}
+
+.imp-checkbox .ant-checkbox-checked .ant-checkbox-inner::after {
+    border-color: $text-color;
+}
+
+.score-badge-container {
+    float: left;
+    margin-right: 5px;
+    text-align: center;
+}
+
+.score-badge-container .ant-badge-count  {
+    padding: 0px;
+    width: 30px;
+    height: 13px;
+    line-height: 13px;
+    font-size: 8px;
+    font-weight: bold;
+    background-color: $primary-color;
+    color: $text-color;
+}
+
+.score-badge-container .score-text {
+    // margin-top: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.player-stats-table {
+    .ant-layout-sider {
+      background-color: $primary-color;
+      color: $text-color !important;
+
+      .ant-menu {
+        background-color: $primary-color;
+        color: $text-color;
+  
+        .ant-menu-item-selected {
+          background-color: $primary-dark-color;
+          color: $text-color !important;
+        }
+  
+        .ant-menu-item {
+            color: $text-color !important;
+          &:hover {
+            background-color: $primary-dark-color;
+            color: $text-color !important;
+          }
+        }
+      }
+    }
+  
+      .ant-table-thead > tr > th {
+        background-color: #f0f0f0;
+        color: $primary-color;
+      }
+  
+      .ant-table-tbody > tr > td {
+        color: #333;
+      }
+
+      /* Decrease row height by adjusting padding and font size */
+      .ant-table-tbody > tr > td {
+        padding: 8px;  /* Adjust the padding as needed */
+        font-size: 12px;  /* Adjust the font size as needed */
+      }
+
+      /* Optional: Adjust the header row similarly if you want a consistent look */
+      .ant-table-thead > tr > th {
+        padding: 8px;  /* Adjust the padding */
+        font-size: 12px;  /* Adjust the font size */
+      }
+
+      /* Adjust the overall table height (if needed) */
+      .ant-table {
+        font-size: 12px;
+      }
+
+          
+  }
+

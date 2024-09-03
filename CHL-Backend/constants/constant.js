@@ -21,17 +21,21 @@ const LOGOUT_API = '/logout';
 //Series Level APIS
 const SERIES_LIST = '/series_list/:seriesType';
 const ADD_SERIES = '/add_series';
-const SERIES_TEAMS_LIST = '/teams_list';
+const SERIES_TEAMS_LIST = '/teams_list/:seriesId';
 const ADD_SERIES_TEAMS_LIST = '/add_teams';
 const USER_SERIES_LIST = '/user_series_list';
 const ADD_USER_SERIES_LIST = '/add_user_series';
 const TEAMS_SQUAD_LIST = '/series/:seriesId/squad/:squadId';
+const TEAMS_SQUAD_STATUS_LIST = '/series_squad_status';
+
 const ADD_TEAMS_SQUAD = '/add_squad';
 const SERIES_MATCHES_LIST = '/series_matches/:seriesId';
+const SERIES_INDIVIDUAL_MATCH = '/series_individual_match/:seriesId/:matchId';
 const ADD_SERIES_MATCHES = '/add_series_matches';
 const ADD_MATCHES_SCORECARD = '/scorecard';
 const PLAYERS_STATS_PERTEAM = '/players_stats/:seriesId/:teamId';
 const PLAYERS_STATS_TWOTEAM = '/twoteams_players_stats';
+const MATCH_PLAYERS_STATS = '/series_match_players_stats';
 
 //api RETURN STATUS CODE
 const SUCCESS_STATUS_CODE = 200;
@@ -80,5 +84,8 @@ module.exports = {
     CHL_PLAYERS_MATCH_STATS,
     ADD_MATCHES_SCORECARD,
     PLAYERS_STATS_PERTEAM,
-    PLAYERS_STATS_TWOTEAM
+    PLAYERS_STATS_TWOTEAM,
+    TEAMS_SQUAD_STATUS_LIST,
+    SERIES_INDIVIDUAL_MATCH,
+    MATCH_PLAYERS_STATS
 }

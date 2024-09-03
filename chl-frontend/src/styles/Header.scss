@@ -1,0 +1,33 @@
+@import './variables';
+
+.chl-header-root {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: $primary-color;
+
+  .logo img {
+    height: 40px;  // Adjust according to your logo's size
+  }
+
+  .auth-buttons {
+    display: flex;
+    align-items: center;
+
+    .ant-btn-primary {
+      background-color: $text-color;
+      color: $primary-color;
+      border: none;
+
+      &:hover {
+        color: $text-color;
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .add-series-btn {
+    margin-right: 20px;
+  }
+}

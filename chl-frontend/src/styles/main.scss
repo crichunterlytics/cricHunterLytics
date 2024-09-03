@@ -1,0 +1,60 @@
+@import './variables';
+
+body {
+    font-family: $chl-font-family !important;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+.ant-btn-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    &:hover {
+      background-color: darken($primary-color, 10%) !important;
+      border-color: darken($primary-color, 10%);
+    }
+  }
+  
+  .ant-card-head {
+    color: $primary-color;
+  }
+  
+  .ant-modal-header {
+    background-color: $primary-color;
+    color: #fff;
+  }
+  
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: $primary-color;
+    font-weight: bold;
+  }
+
+  // CustomTabs.scss
+.ant-tabs-tab {
+    &.ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: $primary-color !important;
+      font-weight: bold; // Optional: Make the active tab bold
+    }
+    
+    &:hover .ant-tabs-tab-btn {
+      color: $primary-color !important;
+    }
+  }
+  
+  .ant-tabs-ink-bar {
+    background-color: $primary-color !important; // Customize the underline color
+  }
+
+.chl-h1-cs {
+  font-weight: bold;
+  font-size: 24px;
+  color: $primary-color;
+}
+
+.chl-page-header-h1title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+  

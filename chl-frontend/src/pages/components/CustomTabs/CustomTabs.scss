@@ -1,0 +1,28 @@
+@import '../../../styles/variables';
+.custom-tabs {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tab-titles {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .tab-title {
+    padding: 10px 20px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+  }
+  
+  .tab-title.active {
+    font-weight: bold;
+    color: $primary-color;
+    border-bottom: 2px solid $primary-color; /* Primary color */
+  }
+  
+  .tab-content {
+    padding: 20px;
+  }
+  

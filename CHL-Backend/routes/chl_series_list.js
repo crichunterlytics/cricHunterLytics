@@ -11,15 +11,19 @@ const db = require("../lib/chlDb.js");
 // API : Get Available serieses list, No PARAMETER required - 'series_list'
 router.get(`${SERIES_LIST}`, (req, res, next) => {
   const { seriesType } = req.params;
-    db.query(`SELECT * FROM ${CHL_SERIES} s WHERE s.series_type = ?`,
+    db.query(
+      // `SELECT * FROM ${CHL_SERIES} s WHERE s.series_type = ?`,
+      `SELECT * FROM ${CHL_SERIES} s WHERE s.series_type = ?
+      AND ((CURDATE() BETWEEN FROM_UNIXTIME(s.start_date / 1000) AND FROM_UNIXTIME(s.end_date / 1000))
+      OR (CURDATE() < FROM_UNIXTIME(s.start_date / 1000)))`,
       [seriesType],
       function (error, results, fields) {
         if (error) {
-          throw error;
           return res.status(ERROR_STATUS_CODE).send({
             msg: error,
             err: true,
-            status_code: ERROR_STATUS_CODE
+            status_code: ERROR_STATUS_CODE,
+            data: []
           });
         }
         return res.status(SUCCESS_STATUS_CODE).send({
@@ -43,10 +47,11 @@ router.post(`${ADD_SERIES}`, (req, res) => {
       series.seriesType,
       series.dateHeaderText
   ]);
-
+  
   const sql = `
-      INSERT INTO ${CHL_SERIES} (series_id, series_name, start_date, end_date, series_type, series_header_text) 
-      VALUES ?`;
+  INSERT INTO ${CHL_SERIES} (series_id, series_name, start_date, end_date, series_type, series_header_text) 
+  VALUES ? 
+  ON DUPLICATE KEY UPDATE series_id = series_id;`;
 
   // Execute the query
   db.query(sql, [values], (err, result) => {

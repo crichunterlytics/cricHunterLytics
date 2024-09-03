@@ -28,7 +28,8 @@ router.post(`${ADD_MATCHES_SCORECARD}`, (req, res) => {
     m.given_runs != null && m.given_runs != '' ? m.given_runs : 0,
     m.total_wicket_taken != null && m.total_wicket_taken != '' ? m.total_wicket_taken : 0,
     m.bowling_economy != null && m.bowling_economy != '' ? m.bowling_economy : 0,
-    m.total_balls_bowled != null && m.total_balls_bowled != '' ? m.total_balls_bowled : 0
+    m.total_balls_bowled != null && m.total_balls_bowled != '' ? m.total_balls_bowled : 0,
+    m.opposite_teamname ? m.opposite_teamname : "TBD"
   ]);
   const sql = `
       INSERT INTO ${CHL_PLAYERS_MATCH_STATS} (
@@ -50,14 +51,16 @@ router.post(`${ADD_MATCHES_SCORECARD}`, (req, res) => {
         given_runs,
         total_wicket_taken,
         bowling_economy,
-        total_balls_bowled
+        total_balls_bowled,
+        opposite_teamname
         )
     VALUES ?`;
 
   // Execute the query
   db.query(sql, [values], (err, result) => {
-    console.log("err:", err);
-    console.log("result=",result);
+    console.log("*************");
+    console.log(err)
+    console.log("rrrrr=", result)
       if (err) {
           return res.status(DB_QUERY_FAILED_CODE).json({ 
               error: ERROR_MESSAGES_STATUS_CODE[DB_QUERY_FAILED_CODE] 
