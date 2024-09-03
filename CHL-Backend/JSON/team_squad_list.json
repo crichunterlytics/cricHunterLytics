@@ -1,0 +1,30 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "team_id": 1978,
+            "series_id": 7855,
+            "squad_id": 47967,
+            "player_id": 9791,
+            "player_name": "Brandon King",
+            "player_role": "Batter",
+            "player_image_id": 244662,
+            "player_bat_style": "Right-hand bat",
+            "player_bowl_style": ""
+        },
+        {
+            "id": 2,
+            "team_id": 1978,
+            "series_id": 7855,
+            "squad_id": 47967,
+            "player_id": 9791,
+            "player_name": "Brandon King",
+            "player_role": "Batter",
+            "player_image_id": 244662,
+            "player_bat_style": "Right-hand bat",
+            "player_bowl_style": ""
+        }
+    ],
+    "err": false,
+    "status_code": 200
+}

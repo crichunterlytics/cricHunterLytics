@@ -1,0 +1,105 @@
+@import '../../styles/variables';
+
+.ant-ribbon {
+    color: $match_format_color !important;
+    background-color: $match_format_color !important;
+    font-size: 10px;
+    line-height: 14px;
+    padding: 0 4px;
+}
+
+.match-card {
+    .match-stats-label {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        padding: 5px;
+        border-radius: 3px;
+        font-weight: bold;
+        font-size: 12px;
+        color: $primary-color;
+        text-decoration-line: underline;
+        cursor: pointer;
+    }
+
+    .match-label {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-weight: bold;
+        color: $text-color;
+        font-size: 12px;
+    }
+
+    .completed {
+        background-color: $success-status-color;
+    }
+
+    .next-coming {
+        background-color: $pending-status-color;
+    }
+
+    .in-progress {
+        background-color: $inprogress-status-color;
+    }
+
+    .match-info {
+        display: flex;
+        align-items: center;
+        // justify-content: space-between;
+
+        .team {
+            display: flex;
+            align-items: center;
+
+            .team-logo {
+                width: 40px;
+                height: 40px;
+                margin-right: 10px;
+            }
+
+            .team-name {
+                font-weight: bold;
+                font-size: 18px;
+                color: $primary-color;
+            }
+        }
+
+        .vs-text {
+            font-weight: bold;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+    }
+
+    .ant-card-body {
+        padding: 10px 24px;
+        margin-bottom: 5px;
+    }
+
+    .match-location {
+        font-size: 14px;
+        color: $secondary-text-color;
+        margin-bottom: 5px;
+    }
+
+    .match-date {
+        font-size: 12px;
+        color: $secondary-text-color;
+        margin-bottom: 5px;
+    }
+
+    .match-result {
+        font-size: 12px;
+        font-weight: bold;
+        color: $primary-color;
+    }
+}
+
+.display-btn-right-cornor {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

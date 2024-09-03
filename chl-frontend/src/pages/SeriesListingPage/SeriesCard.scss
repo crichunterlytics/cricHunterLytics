@@ -1,0 +1,27 @@
+@import '../../styles/variables';
+.series-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+  
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(107, 13, 172, 0.2);
+    }
+  
+    .ant-card-meta-title {
+      color: $primary-color;
+      font-weight: 600;
+    }
+  
+    .ant-card-meta-description {
+      color: #555;
+    }
+  
+    img {
+      transition: transform 0.3s;
+    }
+  
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+  
