@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">android-CHL</string>
+    <string name="add_to_list">Add to list</string>
+    <string name="international">International</string>
+    <string name="league">League</string>
+    <string name="domestic">Domestic</string>
+    <string name="women">Women</string>
+    <string name="teams">Teams</string>
+    <string name="matches">Matches</string>
+    <string name="view_stats">View Stats</string>
 </resources>

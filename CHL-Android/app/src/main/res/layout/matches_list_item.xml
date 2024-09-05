@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_5dp"
+        app:cardCornerRadius="@dimen/card_radius"
+        android:layout_marginTop="@dimen/_5dp"
+        android:layout_marginStart="@dimen/_5dp"
+        android:layout_marginEnd="@dimen/_5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardMaxElevation="@dimen/_5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+<RelativeLayout android:id="@+id/lytTeam"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/_10dp"
+    android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/team1Image"
+        android:layout_width="@dimen/_50dp"
+        android:layout_height="@dimen/_50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/_10dp"
+        android:src="@drawable/ic_profile"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"/>
+    <TextView
+        android:id="@+id/team1Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="india"
+        android:textColor="@color/team1_color"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_toEndOf="@+id/team1Image"
+        android:textSize="@dimen/_20sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/versusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="@dimen/_30dp"
+        android:layout_toEndOf="@+id/team1Name"
+        android:text="VS"
+        android:textColor="@color/default_text_color"
+        android:layout_centerVertical="true"
+        android:gravity="center"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/team2Image"
+        android:layout_width="@dimen/_50dp"
+        android:layout_height="@dimen/_50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/_30dp"
+        android:src="@drawable/ic_profile"
+
+        android:layout_toEndOf="@+id/versusText"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"/>
+    <TextView
+        android:id="@+id/team2Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="india"
+        android:textColor="@color/team2_color"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_toEndOf="@+id/team2Image"
+        android:textSize="@dimen/_20sp"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
+
+    <TextView
+        android:id="@+id/dateTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_16sp"
+        android:gravity="center"
+        android:textColor="@color/date_time_color"
+
+        android:text="dhcds"
+        android:layout_below="@+id/lytTeam"/>
+
+    <TextView
+        android:id="@+id/venue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_16sp"
+        android:gravity="center"
+        android:textColor="@color/venue_color"
+android:text="pune"
+        android:layout_below="@+id/dateTime"
+        android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/txttch_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_16sp"
+                android:layout_below="@+id/venue"
+                android:visibility="invisible"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:layout_marginTop="4dp"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

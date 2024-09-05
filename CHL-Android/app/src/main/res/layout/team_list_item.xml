@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlytListItem"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_5dp"
+        app:cardCornerRadius="@dimen/card_radius"
+        android:layout_marginTop="@dimen/_5dp"
+        android:layout_marginStart="@dimen/_5dp"
+        android:layout_marginEnd="@dimen/_5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardMaxElevation="@dimen/_5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_team_logo"
+                android:layout_width="@dimen/_50dp"
+                android:layout_height="@dimen/_50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10dp"
+                android:src="@drawable/ic_profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
+            <TextView
+                android:id="@+id/txt_team_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/img_team_logo"
+                android:textSize="@dimen/_20sp"
+                android:textColor="@color/black"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
+            <TextView
+                android:id="@+id/txt_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:text="@string/view_stats"
+                android:layout_margin="@dimen/_10dp"
+                android:padding="@dimen/_10dp"
+                android:textAppearance="?attr/textAppearanceListItemSmall"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sp" />
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

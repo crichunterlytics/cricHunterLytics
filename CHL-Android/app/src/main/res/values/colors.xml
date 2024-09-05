@@ -2,5 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tab_text_color">#BDC1CA</color>
     <color name="colorPrimary">#6D31ED</color>
+    <color name="round_button_color">#6D31ED</color>
+    <color name="rounded_color">#BDC1CA</color>
+    <color name="grey_faint_txt_color">#9095A1</color>
+        <color name="team1_color">#FF5722</color> <!-- Orange -->
+        <color name="team2_color">#2196F3</color> <!-- Blue -->
+        <color name="date_time_color">#4CAF50</color> <!-- Green -->
+        <color name="venue_color">#9E9E9E</color> <!-- Gray -->
+        <color name="default_text_color">#000000</color> <!-- Black -->
 </resources>
