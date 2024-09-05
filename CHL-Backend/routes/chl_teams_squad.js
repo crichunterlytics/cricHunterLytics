@@ -47,7 +47,8 @@ router.post(`${ADD_TEAMS_SQUAD}`, (req, res) => {
         team_id, series_id, squad_id, player_id,
         player_name, player_role, player_image_id, 
         player_bat_style, player_bowl_style
-        ) VALUES ?`;
+        ) VALUES ?
+        ON DUPLICATE KEY UPDATE series_id = series_id AND squad_id = squad_id AND player_id = player_id;`;
 
     // Execute the query
     db.query(sql, [values], (err, result) => {

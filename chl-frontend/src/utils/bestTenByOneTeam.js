@@ -3,6 +3,7 @@ import { PLAYER_ROLE_BATALL, PLAYER_ROLE_BATTER, PLAYER_ROLE_BOWLALL, PLAYER_ROL
 export const getBestTenByOneTeam = (playerData) => {
 
     let teamPlayers = {};
+
     playerData.forEach(player => {
         const { team_id } = player;
         if (!teamPlayers[team_id])  {
@@ -63,6 +64,10 @@ export const getBestTenByOneTeam = (playerData) => {
             selectedPlayers.push(player);
         }
     }
+
+    selectedPlayers.sort((a, b) => b[SERIESPOINT_TOTAL] - a[SERIESPOINT_TOTAL]);
+    selectedPlayers[0] = {...selectedPlayers[0], isCaptain: true}
+    selectedPlayers[1] = {...selectedPlayers[1], isVoiceCaptain: true}
 
     return selectedPlayers;
 };

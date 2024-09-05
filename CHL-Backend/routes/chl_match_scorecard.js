@@ -25,6 +25,7 @@ router.post(`${ADD_MATCHES_SCORECARD}`, (req, res) => {
 
       // Filter out stats for player_ids that do not exist in team_squad_players
       const validPlayerStats = matches_data.filter(stat => validPlayerIds.includes(stat.player_id));
+      const skippedPlayerIds = matches_data.filter(stat => !validPlayerIds.includes(stat.player_id)).map(stat => stat.player_id);
 
       if (validPlayerStats.length === 0) {
           return res.status(400).json({ message: 'No valid player IDs found for insertion' });
@@ -78,7 +79,9 @@ router.post(`${ADD_MATCHES_SCORECARD}`, (req, res) => {
         total_balls_bowled,
         opposite_teamname
         )
-    VALUES ?`;
+    VALUES ?
+    ON DUPLICATE KEY UPDATE series_id = series_id AND match_id = match_id AND player_id = player_id;`;
+    ;
 
     db.query(sql, [values], (err, result) => {
       console.log("*************");

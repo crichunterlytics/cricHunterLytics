@@ -1,0 +1,57 @@
+@import '../../../styles/variables';
+
+.team-preview-modal 
+{
+  width: 600px !important;
+
+  .player-cvc-cls {
+    position: absolute;
+    top: 60px;
+    left: 30px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 10px;
+  }
+  
+  .ant-modal-title{
+    color: $primary-color;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+  }
+
+    .preview-section-title {
+        text-align: center;
+        padding: 5px;
+        color: $primary-color;
+        font-weight: bold;
+    }
+    
+    .ground-background {
+        background-color: #2e7d32; /* Ground color */
+        padding: 20px;
+        border-radius: 8px;
+    }
+      
+      .player-card {
+        background: $primary-color;
+        border: none;
+        text-align: center;
+        margin: 10px;
+
+        .ant-card-body {
+          padding: 10px 0;
+        }
+      }
+      
+      .player-name {
+        margin-top: 8px;
+        font-weight: bold;
+        color: $text-color;
+        font-size: 10px;
+      }
+}
+
+  
+  
+  

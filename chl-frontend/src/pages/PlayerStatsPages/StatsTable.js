@@ -51,44 +51,49 @@ const StatsTable = ({tableData}) => {
             ),
         },
         {
-        title: 'Bat',
-        dataIndex: 'isMIPBatter',
-        key: 'isMIPBatter',
-        render: (checked) => (
-            <>
-            {checked ? 
-            <Checkbox checked={checked} className="imp-checkbox" />
-            : ""
-            }
-            </>
-        ),
-        },
-        {
-        title: 'Bowl',
-        dataIndex: 'isMIPBowler',
-        key: 'isMIPBowler',
-        render: (checked) => (
-            <>
-            {checked ? 
-            <Checkbox checked={checked} className="imp-checkbox" />
-            : ""
-            }
-            </>
-        ),
-        },
-        {
-        title: 'All',
-        dataIndex: 'isMIPAllrounder',
-        key: 'isMIPAllrounder',
-        render: (checked) => (
-            <>
-            {checked ? 
-            <Checkbox checked={checked} className="imp-checkbox" />
-            : ""
-            }
-            </>
-        ),
-        },
+            title: 'Best Series Performer',
+            children: [
+                {
+                title: 'BAT',
+                dataIndex: 'isMIPBatter',
+                key: 'isMIPBatter',
+                render: (checked) => (
+                    <>
+                    {checked ? 
+                    <Checkbox checked={checked} className="imp-checkbox" />
+                    : ""
+                    }
+                    </>
+                ),
+                },
+                {
+                title: 'BOWL',
+                dataIndex: 'isMIPBowler',
+                key: 'isMIPBowler',
+                render: (checked) => (
+                    <>
+                    {checked ? 
+                    <Checkbox checked={checked} className="imp-checkbox" />
+                    : ""
+                    }
+                    </>
+                ),
+                },
+                {
+                title: 'ALL',
+                dataIndex: 'isMIPAllrounder',
+                key: 'isMIPAllrounder',
+                render: (checked) => (
+                    <>
+                    {checked ? 
+                    <Checkbox checked={checked} className="imp-checkbox" />
+                    : ""
+                    }
+                    </>
+                ),
+                }
+            ]
+        }
     ];
 
   return (

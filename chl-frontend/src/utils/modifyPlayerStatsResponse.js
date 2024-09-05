@@ -1,8 +1,9 @@
 import { DISPLAY_PLAYER_SERIES_RUNS, DISPLAY_PLAYER_SERIES_WICKETS, DISPLAY_PLAYING_STYLE, MATCHPOINT_MATCH_RUN, MATCHPOINT_MATCH_WICKETS, MATCHPOINT_TOTAL, PLAYER_PLAYING_STYLE, SERIESPOINT_MATCH_RUN, SERIESPOINT_MATCH_WICKETS, SERIESPOINT_TOTAL, TOTAL_SERIES_BALLS_BOWLED, TOTAL_SERIES_BALL_PLAYED, TOTAL_SERIES_FOURS, TOTAL_SERIES_MAIDENS, TOTAL_SERIES_OVERS_BOWLED, TOTAL_SERIES_RUNS, TOTAL_SERIES_RUNS_GIVEN, TOTAL_SERIES_SIXES, TOTAL_SERIES_WICKETS } from "../constants/generalApp";
 import { calculatePlayerScorePoints } from "./calculatePlayerScorePoints";
 import { getPlayerIds, getTopAllrounders, getTopBatters, getTopBowlers } from "./topBatBowlRankPlayers";
+import { getInitials } from '../utils/getStringInitials.js';
 
-export const modifyPlayerStatsResponse = (data) => {
+export const modifyPlayerStatsResponse = (data, matchFormatType) => {
     let finalModifyData = [];
     let playersData = {};
     
@@ -10,21 +11,19 @@ export const modifyPlayerStatsResponse = (data) => {
         const displayRuns = data[d].match_run === 0 && data[d].played_ball === 0 ? '-' : `${data[d].match_run}(${data[d].played_ball})`;
         const displayWickets = data[d].total_balls_bowled === 0 ? '-' : `${data[d].total_wicket_taken}/${data[d].total_over_bowled}`; 
         //Create Match Points - Runs, Wickets, Total
-        data[d] = calculatePlayerScorePoints(data[d], "T20");
-        
+        data[d] = calculatePlayerScorePoints(data[d], matchFormatType);
         //Create player key 
         const availPlayerKey = `${data[d].series_id}_${data[d].team_id}_${data[d].player_id}`;
 
         if(playersData[availPlayerKey]) {
             //already available player
             let pd = playersData[availPlayerKey];
-            console.log(pd)
             playersData[availPlayerKey] = {
                 ...pd,
                 // [DISPLAY_PLAYER_SERIES_RUNS]: `${pd[DISPLAY_PLAYER_SERIES_RUNS]}, ${displayRuns}`,
                 // [DISPLAY_PLAYER_SERIES_WICKETS] : `${pd[[DISPLAY_PLAYER_SERIES_WICKETS]]}, ${displayWickets}`,
-                [DISPLAY_PLAYER_SERIES_RUNS]: [...pd[DISPLAY_PLAYER_SERIES_RUNS], {value: displayRuns, team:"TBD"}],
-                [DISPLAY_PLAYER_SERIES_WICKETS]: [...pd[DISPLAY_PLAYER_SERIES_WICKETS], {value: displayWickets, team:"TBD"}],
+                [DISPLAY_PLAYER_SERIES_RUNS]: [...pd[DISPLAY_PLAYER_SERIES_RUNS], {value: displayRuns, team:getInitials(data[d].opposite_teamname)}],
+                [DISPLAY_PLAYER_SERIES_WICKETS]: [...pd[DISPLAY_PLAYER_SERIES_WICKETS], {value: displayWickets, team:getInitials(data[d].opposite_teamname)}],
                 [TOTAL_SERIES_RUNS] : pd[[TOTAL_SERIES_RUNS]] + data[d].match_run,
                 [TOTAL_SERIES_BALL_PLAYED] : pd[TOTAL_SERIES_BALL_PLAYED] + data[d].played_ball,
                 [TOTAL_SERIES_FOURS] : pd[TOTAL_SERIES_FOURS] + data[d].total_four,
@@ -46,8 +45,8 @@ export const modifyPlayerStatsResponse = (data) => {
             playersData[availPlayerKey] = {
                 ...data[d],
                 [DISPLAY_PLAYING_STYLE]: playerPlayingStyle,
-                [DISPLAY_PLAYER_SERIES_RUNS]: [{value: displayRuns, team:"TBD"}],
-                [DISPLAY_PLAYER_SERIES_WICKETS] : [{value: displayWickets, team:"TBD"}],
+                [DISPLAY_PLAYER_SERIES_RUNS]: [{value: displayRuns, team:getInitials(data[d].opposite_teamname)}],
+                [DISPLAY_PLAYER_SERIES_WICKETS] : [{value: displayWickets, team:getInitials(data[d].opposite_teamname)}],
                 [TOTAL_SERIES_RUNS] : data[d].match_run,
                 [TOTAL_SERIES_BALL_PLAYED] : data[d].played_ball,
                 [TOTAL_SERIES_FOURS] : data[d].total_four,
@@ -65,7 +64,7 @@ export const modifyPlayerStatsResponse = (data) => {
             }
         }
     }
-
+    console.log("playersData====", playersData)
     finalModifyData = Object.keys(playersData).map(key => {
         return {
             ...playersData[key],

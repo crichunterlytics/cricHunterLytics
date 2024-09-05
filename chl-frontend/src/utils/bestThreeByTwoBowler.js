@@ -5,7 +5,7 @@ export const bestThreeByTwoBowler = (playerData) => {
 
     // Sort by performance
     playerData.sort((a, b) => b[SERIESPOINT_MATCH_WICKETS] - a[SERIESPOINT_MATCH_WICKETS]);
-
+    
     selectedPlayers.push(playerData[0]);
     selectedPlayers.push(playerData[1]);
     selectedPlayers.push(playerData[2]);
@@ -21,6 +21,10 @@ export const bestThreeByTwoBowler = (playerData) => {
             selectedPlayers.push(player);
         }
     }
+
+    selectedPlayers.sort((a, b) => b[SERIESPOINT_MATCH_WICKETS] - a[SERIESPOINT_MATCH_WICKETS]);
+    selectedPlayers[0] = {...selectedPlayers[0], isCaptain: true}
+    selectedPlayers[1] = {...selectedPlayers[1], isVoiceCaptain: true}
 
     return selectedPlayers;
 };

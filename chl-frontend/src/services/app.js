@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 // const HOST_NAME = 'https://cricbuzz-cricket.p.rapidapi.com';
-// const HOST_NAME = 'http://88.222.241.104:4000';
-const HOST_NAME = 'http://localhost:4000';
+const HOST_NAME = 'http://88.222.241.104:4000';
+// const HOST_NAME = 'http://localhost:4000';
 const API_BASE_URL = `${HOST_NAME}/api`;
 // const API_BASE_URL = `${HOST_NAME}/`;
 

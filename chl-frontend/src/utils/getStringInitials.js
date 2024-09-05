@@ -1,4 +1,6 @@
 export const getInitials = (name) => {
+    const skipWords = ["and"];
+
     // Split the input string by spaces to get individual words
     const words = name.trim().split(" ");
 
@@ -9,8 +11,10 @@ export const getInitials = (name) => {
     
     // Map over the words array, returning the first character of each word
     // Convert each character to uppercase to handle mixed cases
-    const initials = words.map(word => word.charAt(0).toUpperCase());
-    
+    const initials = words
+        .filter(word => !skipWords.includes(word.toLowerCase()))
+        .map(word => word.charAt(0).toUpperCase());  
+          
     // Join the initials array into a single string
     return initials.join("");
 }

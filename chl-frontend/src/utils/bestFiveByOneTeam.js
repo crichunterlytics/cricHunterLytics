@@ -24,5 +24,9 @@ export const bestFiveByOneTeam = (playerData) => {
         }
     }
 
+    selectedPlayers.sort((a, b) => b[SERIESPOINT_TOTAL] - a[SERIESPOINT_TOTAL]);
+    selectedPlayers[0] = {...selectedPlayers[0], isCaptain: true}
+    selectedPlayers[1] = {...selectedPlayers[1], isVoiceCaptain: true}
+    
     return selectedPlayers;
 };

@@ -53,7 +53,9 @@ const SeriesTeamsPage = ({seriesId}) => {
             console.log("Series Teams List=",response.data);
             if(response.data.status_code === 200) {
                 setTeamsListData(response.data.data);
-                getTeamsSquadStatusData(response.data.data);
+                if(response.data.data.length > 0) {
+                    getTeamsSquadStatusData(response.data.data);
+                }
             }
             else {
                 setTeamsListData([]);

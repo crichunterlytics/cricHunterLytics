@@ -22,5 +22,9 @@ export const bestThreeByTwoBatter = (playerData) => {
         }
     }
 
+    selectedPlayers.sort((a, b) => b[SERIESPOINT_MATCH_RUN] - a[SERIESPOINT_MATCH_RUN]);
+    selectedPlayers[0] = {...selectedPlayers[0], isCaptain: true}
+    selectedPlayers[1] = {...selectedPlayers[1], isVoiceCaptain: true}
+
     return selectedPlayers;
 };

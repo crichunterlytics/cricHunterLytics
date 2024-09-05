@@ -9,7 +9,7 @@ import { getPlayersStatsApi } from '../../services/playerStatsApi';
 
 const { Sider, Content } = Layout;
 
-const PlayerStatsPage = ({seriesId, multipleTeamStats, teamId_prop, teamName_prop}) => {
+const PlayerStatsPage = ({seriesId, multipleTeamStats, teamId_prop, teamName_prop, matchType}) => {
     const[selectedTeam, setSelectedTeam] = useState("");
     const [spinLoading, setSpinLoading] = useState(false);
     const [teamsListData, setTeamsListData] = useState([]);
@@ -53,7 +53,7 @@ const PlayerStatsPage = ({seriesId, multipleTeamStats, teamId_prop, teamName_pro
     const getPlayerStats = async (teamId) => {
         try {
           const response = await getPlayersStatsApi({seriesId, teamId });
-          const finalData = modifyPlayerStatsResponse(response.data.data); 
+          const finalData = modifyPlayerStatsResponse(response.data.data, matchType); 
           console.log("team details response= ",finalData)
           setPlayerStatsData(finalData);
         } catch (e) {
