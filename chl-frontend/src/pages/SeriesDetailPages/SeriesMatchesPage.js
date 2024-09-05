@@ -35,8 +35,9 @@ const SeriesMatchesPage = ({seriesId}) => {
                     }
                 })
                 setMatchesListData(resData);
-                getMatchesStatsData(reqBody, resData);
-                
+                if(response.data.length) {
+                    getMatchesStatsData(reqBody, resData);
+                }                
             }
             else {
                 setMatchesListData([]);

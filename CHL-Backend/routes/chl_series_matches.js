@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   SUCCESS_STATUS_CODE, 
   SERIES_INDIVIDUAL_MATCH,
-  DB_QUERY_FAILED_CODE, ERROR_MESSAGES_STATUS_CODE, SERIES_MATCHES_LIST, CHL_SERIES_MATCHES, ADD_SERIES_MATCHES } = require("../constants/constant.js");
+  DB_QUERY_FAILED_CODE, ERROR_MESSAGES_STATUS_CODE, SERIES_MATCHES_LIST, CHL_SERIES_MATCHES, ADD_SERIES_MATCHES, ERROR_STATUS_CODE } = require("../constants/constant.js");
 const db = require("../lib/chlDb.js");
 
 // API : Get Available serieses list, No PARAMETER required - 'series_list'
