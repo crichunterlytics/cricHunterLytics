@@ -20,6 +20,11 @@ const LOGOUT_API = '/logout';
 
 //Series Level APIS
 const SERIES_LIST = '/series_list/:seriesType';
+const SERIES_LIST_NOT_CONTENT_ADDED = '/series_list_not_content_added/:contentType';
+const SERIES_LIST_NOT_MATCHES_ADDED = 'not_matches_added';
+const SERIES_LIST_NOT_TEAMS_ADDED = 'not_teams_added';
+const SERIES_LIST_NOT_SQUAD_ADDED = 'not_squad_added';
+
 const ADD_SERIES = '/add_series';
 const SERIES_TEAMS_LIST = '/teams_list/:seriesId';
 const ADD_SERIES_TEAMS_LIST = '/add_teams';
@@ -87,5 +92,9 @@ module.exports = {
     PLAYERS_STATS_TWOTEAM,
     TEAMS_SQUAD_STATUS_LIST,
     SERIES_INDIVIDUAL_MATCH,
-    MATCH_PLAYERS_STATS
+    MATCH_PLAYERS_STATS,
+    SERIES_LIST_NOT_CONTENT_ADDED,
+    SERIES_LIST_NOT_MATCHES_ADDED,
+    SERIES_LIST_NOT_TEAMS_ADDED,
+    SERIES_LIST_NOT_SQUAD_ADDED
 }

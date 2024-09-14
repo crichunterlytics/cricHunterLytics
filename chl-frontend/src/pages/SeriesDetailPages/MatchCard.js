@@ -25,7 +25,8 @@ const MatchCard = ({
             <Card className="match-card" bordered={false}>
                 {matchStatus && <div className={`match-label ${matchStatus.toLowerCase().replace(/\s+/g, '-')}`}>{matchStatus}</div>}
                 {hide_view_match_stats ? "" : <div className={`match-stats-label`} onClick={viewTeamsSeriesPerformance}>View Both Teams Series Performance</div>}
-                {!hide_add_match_stats ? "" : <AddTeamSquadModal matchId={matchId} />}
+                {hide_add_match_stats ? "" : <AddTeamSquadModal matchId={matchId} />}
+                {/* <AddTeamSquadModal matchId={matchId} /> */}
                 <div className="match-info">
                     <div className="team">
                         {/* <img src={team1Logo} alt={`${team1Name} logo`} className="team-logo" /> */}

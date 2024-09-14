@@ -6,7 +6,6 @@ import { DEFAULT_SERIES_TYPE, SERIES_TYPE_STR } from '../../constants/generalApp
 import { getSeriesListApi } from '../../services/seriesApis';
 import { CustomTab, CustomTabs } from '../components/CustomTabs/CustomTabs.js';
 import { FormatDate } from '../../utils/FormatDate';
-import AddNewSeriesModal from './AddNewSeriesModal';
 import SpinnerOverlay from '../components/SpinnerOverlay/SpinnerOverlay';
 import { useNavigate } from 'react-router-dom';
 import { SERIES_DETAILS_VIEW_ROUTE } from '../../constants/routes';
@@ -68,13 +67,7 @@ const SeriesListingPage = () => {
     setActiveSeriesType(type);
     getSeriesListData(type);
   };
-
-  const onNewSeriesAdded = (sT) => {
-    setSpinLoading(false);
-    // setActiveSeriesType(sT);
-    // getSeriesListData(sT);
-  }
-
+  
   //On click Select Card to view Series Details View
   const onSeriesSelect = (seriesData) => {
     navigate(`/${SERIES_DETAILS_VIEW_ROUTE}/${seriesData.series_id}/${seriesData.start_date}/${seriesData.end_date}/${seriesData.series_name}`);
@@ -82,12 +75,6 @@ const SeriesListingPage = () => {
 
   return (
     <div className="series-listing-page">
-      <Row>
-        <Col xs={20}></Col>
-        <Col xs={4}>
-          <AddNewSeriesModal onNewSeriesAdded={(stype)=>onNewSeriesAdded(stype)}/>
-        </Col>
-      </Row>
       <CustomTabs>
         {Object.keys(SERIES_TYPE_STR).map((tabKey) => (
           <CustomTab 

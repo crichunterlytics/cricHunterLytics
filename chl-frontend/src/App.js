@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/main.scss';
+import 'antd/dist/reset.css'; // Import Ant Design styles by default
 import './styles/main.scss';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';

@@ -20,7 +20,7 @@ const TeamCard = ({
                     <span className="team-name">{teamName}</span>
                 </div>
             </div>
-            {/* {displayTeamSquadBtn &&  */}
+            {displayTeamSquadBtn && 
             <div className='display-btn-right-cornor'>
                 <AddTeamSquadModal 
                 seriesId={seriesId}
@@ -28,7 +28,7 @@ const TeamCard = ({
                 teamId={teamId}
                 />
             </div>
-            {/* */}
+            }
         </Card>
         </>
     );

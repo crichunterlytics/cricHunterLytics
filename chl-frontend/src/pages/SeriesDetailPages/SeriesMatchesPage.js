@@ -91,14 +91,14 @@ const SeriesMatchesPage = ({seriesId}) => {
 
     return(
         <div className="series_matches-root">
-            {/* {matchesListData.length === 0 && ( */}
+            {matchesListData.length === 0 && (
                 <Row style={{marginBottom: "10px"}}>
                     <Col xs={20}></Col>
                     <Col xs={4}>
                         <AddSeriesMatchesModal seriesId={seriesId} />
                         </Col>
                 </Row>
-            {/* // )} */}
+             )} 
             
             
             <Row>

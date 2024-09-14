@@ -27,8 +27,8 @@ export const assignTokenToHeader = (
 http.interceptors.request.use(
   (config) => {
     // const accessToken = getAccessToken();
-    const accessToken = "5f89e4546bmsh8290f93d0892ed4p171c65jsn4db96acdf2d4"; //Rupali Nile Account
-    // const accessToken = "c468d42bebmsh80c1a182a8f6274p11cc38jsn22eb3a4cf99d"; //Rupali Kelkar account   
+    // const accessToken = "5f89e4546bmsh8290f93d0892ed4p171c65jsn4db96acdf2d4"; //Rupali Nile Account
+    const accessToken = "c468d42bebmsh80c1a182a8f6274p11cc38jsn22eb3a4cf99d"; //Rupali Kelkar account   
     return assignTokenToHeader(config, accessToken);
   },
   error => {

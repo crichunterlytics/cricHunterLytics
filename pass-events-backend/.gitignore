@@ -1,0 +1,88 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs
+logs/
+*.log
+*.log.*
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+jspm_packages/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Build output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.sapper/
+.cache/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Editor and IDE files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+*.swn
+*.bak
+*.backup
+*.orig
+*.tmp
+
+# OS-specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Coverage directories
+coverage/
+*.lcov
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js cache
+.next/
+
+# Nuxt.js cache
+.nuxt/
+
+# Vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts
