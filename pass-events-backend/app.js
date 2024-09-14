@@ -22,8 +22,8 @@ app.use(cors());
 // Apply the middleware to all routes
 app.use(mildInterpreterToken.verifyToken);
 
-const PORT = process.env.PORT || 4000;
-// const PORT = 4000;
+// const PORT = process.env.PORT || 4000;
+const PORT = 4001;
 
 const router = require('./routes/shops_login.js');
 const router1 = require('./routes/eventApis');
