@@ -98,7 +98,7 @@ router.put(`${UPDATE_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res) =>
 router.get(`${GET_ALL_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
     const { shop_id } = req.params;
       db.query(
-        `SELECT * FROM ${PSS_EVENT_TYPE} s WHERE s.shop_id = ?`,
+        `SELECT * FROM ${PSS_EVENT_TYPE} s WHERE s.shop_id = ? `,
         [shop_id],
         function (error, results, fields) {
           if (error) {

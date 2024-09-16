@@ -26,12 +26,13 @@ const GET_ALL_EVENTS_API = '/getAllEvent/:shop_id';
 const ADD_EVENT_THEME_API = '/add_event_theme';
 const UPDATE_EVENT_THEME_API = '/update_event_theme';
 const GET_EVENT_THEMES_API = '/getEventThemes/:shop_id/:event_id';
+const GET_EVENT_ALLTHEMES_API = '/getAllEventThemes/:shop_id';
 
 // Assignee APIs 
 const ADD_ASSIGNEE_API = '/add_assignee';
 const UPDATE_ASSIGNEE_API = '/update_assignee';
-const GET_ALL_ASSIGNEE = '/getEventThemes/:shop_id';
-const GET_EVENT_ASSIGNEE = '/getEventThemes/:shop_id/:event_id';
+const GET_ALL_ASSIGNEE = '/getEventAssignees/:shop_id';
+const GET_EVENT_ASSIGNEE = '/getEventAssignees/:shop_id/:event_id';
 
 // Customers APIS
 const ADD_CUSTOMER_API = '/add_customer';
@@ -116,5 +117,6 @@ module.exports = {
     GET_ALL_UPCOMING_EVENT_API,
     GET_EVENT_UPCOMING_EVENT_API,
     GET_EVENT_CUSTOMER_API,
-    GET_EVENT_THEME_CUSTOMER_API
+    GET_EVENT_THEME_CUSTOMER_API,
+    GET_EVENT_ALLTHEMES_API
 }
