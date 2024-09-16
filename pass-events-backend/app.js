@@ -34,6 +34,7 @@ const router4 = require('./routes/customersApis');
 app.use('/api', router);
 app.use('/api/event', router1);
 app.use('/api/theme', router2);
+app.use('/api/assignee', router3);
 app.use('/api/customer', router4);
 
 // Serve static files from the "images" directory
