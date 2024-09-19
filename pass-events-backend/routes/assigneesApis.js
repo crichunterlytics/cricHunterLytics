@@ -12,7 +12,9 @@ const {
     UPDATE_ASSIGNEE_API,
     GET_EVENT_ASSIGNEE,
     PSS_EVENT_ASSIGNEES,
-    GET_ALL_ASSIGNEE
+    GET_ALL_ASSIGNEE,
+    SUCCESS_ADD_ASSIGNEE_MSG,
+    SUCCESS_UPDATE_ASSIGNEE_MSG
 } = require("../constants/constant.js");
 
 // POST API : Add New Event Type
@@ -42,16 +44,18 @@ router.post(`${ADD_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
           console.log(result)
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
+                    status_code: BAD_REQUEST_CODE,
                     error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
                 });
             }
             res.status(SUCCESS_STATUS_CODE).json({ 
                 status_code: SUCCESS_STATUS_CODE,
-                message: 'New Assignee Added' 
+                message: SUCCESS_ADD_ASSIGNEE_MSG
             });
         });
     } catch (err) {
-        res.status(INTERNAL_SERVER_ERROR).json({ 
+        res.status(INTERNAL_SERVER_ERROR).json({
+            status_code: INTERNAL_SERVER_ERROR, 
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
         });    
     }
@@ -80,6 +84,7 @@ router.put(`${UPDATE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
         ], (err, result) => {
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
+                    status_code: BAD_REQUEST_CODE,
                     error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
                 });
             }
@@ -91,11 +96,12 @@ router.put(`${UPDATE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
             }
             res.status(SUCCESS_STATUS_CODE).json({ 
                 status_code: SUCCESS_STATUS_CODE,
-                message: 'Assignee updated successfully' 
+                message: SUCCESS_UPDATE_ASSIGNEE_MSG
             });
         });
     } catch (err) {
-        res.status(INTERNAL_SERVER_ERROR).json({ 
+        res.status(INTERNAL_SERVER_ERROR).json({
+            status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
         });
     }
@@ -105,7 +111,7 @@ router.put(`${UPDATE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
 router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
     const { shop_id, event_id } = req.params;
       db.query(
-        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ? AND s.event_id = ?`,
+        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ? AND s.event_id = ? ORDER BY assignee_id DESC`,
         [shop_id, event_id],
         function (error, results, fields) {
           if (error) {
@@ -129,7 +135,7 @@ router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
 router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
     const { shop_id, event_id } = req.params;
       db.query(
-        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ? AND s.event_id = ?`,
+        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ? AND s.event_id = ? ORDER BY assignee_id DESC`,
         [shop_id, event_id],
         function (error, results, fields) {
           if (error) {
@@ -153,7 +159,7 @@ router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
 router.get(`${GET_ALL_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
     const { shop_id } = req.params;
       db.query(
-        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ?`,
+        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ? ORDER BY assignee_id DESC`,
         [shop_id],
         function (error, results, fields) {
           if (error) {

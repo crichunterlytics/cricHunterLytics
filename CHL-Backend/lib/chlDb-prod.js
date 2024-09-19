@@ -1,22 +1,30 @@
 const mysql = require('mysql');
-const connection = mysql.createConnection({
-    host:'184.168.109.23',
+const pool = mysql.createPool({
+    connectionLimit: 10,  // Limit the number of concurrent connections
+    host: '184.168.109.23',
     user: 'rupalinile',
     database: 'crichunterlytics_staging_db',
-    password: 'Nile@Rupali2003'
+    password: 'Nile@Rupali2003',
+    connectTimeout: 10000,  // 10 seconds
+    acquireTimeout: 10000,  // 10 seconds
+    waitForConnections: true,
+    queueLimit: 0           // Disable queue limit
 });
-// connection.connect();
 
-connection.connect((err) => {
+pool.getConnection((err, connection) => {
     if (err) {
-        console.error('Database connection failed:', err);
+        console.error('Error connecting to the database:', err);
         return;
     }
     console.log('Connected to the database.');
+    connection.release();  // Release the connection back to the pool
 });
 
-connection.on('error', (err) => {
+pool.on('error', (err) => {
     console.error('Database error:', err);
+    if (err.code === 'ECONNRESET') {
+        console.error('Connection was reset.');
+    }
 });
 
-module.exports = connection;
+module.exports = pool;

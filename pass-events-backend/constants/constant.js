@@ -69,6 +69,25 @@ const ERROR_MESSAGES_STATUS_CODE = {
     MOBILE_NUMBER_NOT_EXITS: "Mobile number does not exist."
 }
 
+// Event APIs Messages
+const SUCCESS_ADD_EVENT_TYPE_MSG = "Event type added successfully."
+const SUCCESS_UPDATE_EVENT_TYPE_MSG = "Event type updated successfully."
+
+// Event Themes APIs Messages
+const SUCCESS_ADD_THEME_MSG = "Event theme added successfully."
+const SUCCESS_UPDATE_THEME_MSG = "Event theme updated successfully."
+
+// Assignees APIs Messages
+const SUCCESS_ADD_ASSIGNEE_MSG = "Assignee added successfully."
+const SUCCESS_UPDATE_ASSIGNEE_MSG = "Assignee updated successfully."
+
+// Customers APIs Messages
+const SUCCESS_ADD_CUSTOMER_MSG = "Customer added successfully."
+const SUCCESS_UPDATE_CUSTOMER_MSG = "Customer updated successfully."
+const SUCCESS_UPDATE_CUSTOMER_STATUS_MSG = "Customer status updated successfully."
+const SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG = "Customer assignee updated successfully."
+
+
 module.exports = {
     JWT_SECRET_KEY,
     JWT_TOKEN_EXPIRY_TIME,
@@ -118,5 +137,16 @@ module.exports = {
     GET_EVENT_UPCOMING_EVENT_API,
     GET_EVENT_CUSTOMER_API,
     GET_EVENT_THEME_CUSTOMER_API,
-    GET_EVENT_ALLTHEMES_API
+    GET_EVENT_ALLTHEMES_API,
+
+    SUCCESS_ADD_EVENT_TYPE_MSG,
+    SUCCESS_UPDATE_EVENT_TYPE_MSG,
+    SUCCESS_ADD_THEME_MSG,
+    SUCCESS_UPDATE_THEME_MSG,
+    SUCCESS_ADD_ASSIGNEE_MSG,
+    SUCCESS_UPDATE_ASSIGNEE_MSG,
+    SUCCESS_ADD_CUSTOMER_MSG,
+    SUCCESS_UPDATE_CUSTOMER_MSG,
+    SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
+    SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG
 }
