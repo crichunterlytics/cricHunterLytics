@@ -355,16 +355,27 @@ router.get(`${GET_EVENT_THEME_CUSTOMER_API}`, midlData.verifyToken, (req, res, n
 });
 
 router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, next) => {
-  const { shop_id } = req.params;
+  const { shop_id, event_status_list} = req.params;
+  let sqlQuery = '';
+  if(event_status_list === 'old_events') {
+    sqlQuery = `SELECT * 
+       FROM ${PSS_EVENT_CUSTOMERS} s 
+       WHERE s.shop_id = ? 
+       AND DATE(s.event_datetime) < CURDATE() 
+       ORDER BY s.customer_id DESC`;
+  }
+  else {
+    sqlQuery = `SELECT * 
+    FROM ${PSS_EVENT_CUSTOMERS} s 
+    WHERE s.shop_id = ? 
+    AND s.event_status = 'next_coming' 
+    AND (DATE(s.event_datetime) = CURDATE() 
+        OR DATE(s.event_datetime) = CURDATE() + INTERVAL 1 DAY 
+        OR DATE(s.event_datetime) = CURDATE() + INTERVAL 2 DAY) ORDER BY customer_id DESC`;
+  }
 
   db.query(
-    `SELECT * 
-     FROM ${PSS_EVENT_CUSTOMERS} s 
-     WHERE s.shop_id = ? 
-     AND s.event_status = 'next_coming' 
-     AND (DATE(s.event_datetime) = CURDATE() 
-         OR DATE(s.event_datetime) = CURDATE() + INTERVAL 1 DAY 
-         OR DATE(s.event_datetime) = CURDATE() + INTERVAL 2 DAY) ORDER BY customer_id DESC`,
+    sqlQuery,
     [shop_id],
     function (error, results, fields) {
       if (error) {
