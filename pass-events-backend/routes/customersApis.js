@@ -361,7 +361,7 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
     sqlQuery = `SELECT * 
        FROM ${PSS_EVENT_CUSTOMERS} s 
        WHERE s.shop_id = ? 
-       AND DATE(s.event_datetime) < CURDATE() 
+       AND DATE(FROM_UNIXTIME(s.event_datetime / 1000)) < CURDATE() 
        ORDER BY s.customer_id DESC`;
   }
   else {
@@ -369,9 +369,9 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
     FROM ${PSS_EVENT_CUSTOMERS} s 
     WHERE s.shop_id = ? 
     AND s.event_status = 'next_coming' 
-    AND (DATE(s.event_datetime) = CURDATE() 
-        OR DATE(s.event_datetime) = CURDATE() + INTERVAL 1 DAY 
-        OR DATE(s.event_datetime) = CURDATE() + INTERVAL 2 DAY) ORDER BY customer_id DESC`;
+    AND (AND DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
+        OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 1 DAY 
+        OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 2 DAY) ORDER BY customer_id DESC`;
   }
 
   db.query(
