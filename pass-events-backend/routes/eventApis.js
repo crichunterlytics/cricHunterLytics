@@ -175,6 +175,7 @@ router.post(`${REMOVE_EVENT_TYPE_SHOP_API}`, midlData.verifyToken, async (req, r
             message: SUCCESS_REMOVE_EVENT_TYPE_MSG
         });
     } catch (err) {
+        console.log(err)
         res.status(INTERNAL_SERVER_ERROR).json({ 
             status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
