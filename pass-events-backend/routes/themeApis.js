@@ -160,7 +160,7 @@ router.get(`${GET_EVENT_THEMES_API}`, midlData.verifyToken, (req, res, next) => 
 router.get(`${GET_PSS_EVENT_THEMES_API}`, midlData.verifyToken, (req, res, next) => {
       db.query(
         `SELECT * FROM ${PSS_EVENT_THEMES_LIST}`,
-        [shop_id],
+        [],
         function (error, results, fields) {
           if (error) {
             return res.status(BAD_REQUEST_CODE).send({
