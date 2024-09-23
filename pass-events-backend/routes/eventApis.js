@@ -109,43 +109,50 @@ router.put(`${UPDATE_PSS_EVENTS_API}`, midlData.verifyToken, async (req, res) =>
 
 // ADD PSS Shops Events
 router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res) => {
-    const events = req.body; // Expecting an array of {event_id, shop_id}
+    const events = req.body; // Array of event-shop pairs
+    
+    if (!Array.isArray(events) || events.length === 0) {
+        return res.status(BAD_REQUEST_CODE).json({
+            status_code: BAD_REQUEST_CODE,
+            error: "Invalid input format or empty array."
+        });
+    }
     
     try {
-        const insertPromises = events.map(async ({ event_id, shop_id }) => {
-            // Check if the event-shop combination already exists
-            const checkSql = `
-                SELECT COUNT(*) AS count 
-                FROM ${PSS_SHOP_EVENTS_LIST} 
-                WHERE event_id = ? AND shop_id = ?`;
-            
-            const [checkResult] = await db.query(checkSql, [event_id, shop_id]);
-            console.log("checkResult=", checkResult);
-            if (checkResult.count === 0) {
-                // Insert only if no duplicates found
-                const insertSql = `
-                    INSERT INTO ${PSS_SHOP_EVENTS_LIST} (event_id, shop_id)
-                    VALUES (?, ?)`;
-                
-                await db.query(insertSql, [event_id, shop_id]);
-            }
+        const values = [];
+        events.forEach(event => {
+            const { event_id, shop_id } = event;
+            values.push([event_id, shop_id]);
         });
 
-        // Wait for all promises to resolve
-        await Promise.all(insertPromises);
-        
-        res.status(SUCCESS_STATUS_CODE).json({ 
-            status_code: SUCCESS_STATUS_CODE,
-            message: SUCCESS_ADD_EVENT_TYPE_MSG
+        // Insert the user into the database with IGNORE for duplicates
+        const sql = `
+            INSERT IGNORE INTO ${PSS_SHOP_EVENTS_LIST} (
+                event_id, 
+                shop_id
+            ) VALUES ?`;
+
+        db.query(sql, [values], (err, result) => {
+            if (err) {
+                return res.status(BAD_REQUEST_CODE).json({
+                    status_code: BAD_REQUEST_CODE,
+                    error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
+                });
+            }
+            res.status(SUCCESS_STATUS_CODE).json({
+                status_code: SUCCESS_STATUS_CODE,
+                message: `${result.affectedRows} event(s) added successfully.`,
+                duplicate_count: events.length - result.affectedRows // Count ignored duplicates
+            });
         });
     } catch (err) {
-        console.log(err)
-        res.status(INTERNAL_SERVER_ERROR).json({ 
+        res.status(INTERNAL_SERVER_ERROR).json({
             status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
-        });    
+        });
     }
 });
+
 
 // REMOVE PSS Shops Events
 router.post(`${REMOVE_EVENT_TYPE_SHOP_API}`, midlData.verifyToken, async (req, res) => {
