@@ -367,15 +367,23 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
            AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) < CURTIME())) 
        ORDER BY s.customer_id DESC`;
   } else {
-    // Get upcoming events, including those happening later today
+    // // Get upcoming events, including those happening later today 3 days data
+    // sqlQuery = `SELECT * 
+    //    FROM ${PSS_EVENT_CUSTOMERS} s 
+    //    WHERE s.shop_id = ? 
+    //    AND s.event_status = 'next_coming' 
+    //    AND ((DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
+    //        AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) >= CURTIME()) 
+    //     OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 10 DAY 
+    //     OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 20 DAY) 
+    //    ORDER BY s.customer_id DESC`;
+    
+    // Get upcoming events for the next 20 days, including today's upcoming events
     sqlQuery = `SELECT * 
        FROM ${PSS_EVENT_CUSTOMERS} s 
        WHERE s.shop_id = ? 
        AND s.event_status = 'next_coming' 
-       AND ((DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
-           AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) >= CURTIME()) 
-        OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 10 DAY 
-        OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 20 DAY) 
+       AND (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) BETWEEN CURDATE() AND CURDATE() + INTERVAL 20 DAY) 
        ORDER BY s.customer_id DESC`;
   }
 
