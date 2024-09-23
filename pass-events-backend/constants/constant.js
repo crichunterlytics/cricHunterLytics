@@ -6,6 +6,7 @@ const JWT_TOKEN_EXPIRY_TIME = '30d';
 const PSS_USERS = 'pss_shops_user';
 const PSS_EVENTS_LIST = 'pss_events_list';
 const PSS_EVENT_THEMES_LIST = 'pss_themes_list';
+const PSS_SHOP_EVENTS_LIST = 'pss_shops_event_list';
 const PSS_EVENT_TYPE = 'pss_event_type';
 const PSS_EVENT_THEMES = 'pss_event_themes';
 const PSS_EVENT_CUSTOMERS = 'pss_event_customers';
@@ -20,10 +21,12 @@ const FORGOT_PASSWORD_API = '/forgot-password';
 const RESET_PASSWORD_API = '/reset-password';
 
 //Event APIs
-const ADD_EVENT_TYPE_API = '/add_event_type';
-const UPDATE_EVENT_TYPE_API = '/update_event_type';
-const GET_ALL_EVENTS_API = '/getAllEvent/:shop_id';
+const ADD_PSS_EVENTS_API = '/add_pss_events';
+const UPDATE_PSS_EVENTS_API = '/update_pss_events';
+const ADD_SHOP_EVENT_TYPE_API = '/add_shop_event_type';
+const REMOVE_EVENT_TYPE_SHOP_API = '/remove_shop_event_type';
 const GET_ALL_PSS_EVENTS_API = '/get_all_pss_events';
+const GET_ALL_EVENTS_API = '/getAllEvent/:shop_id';
 
 // Event Themes APIs 
 const ADD_EVENT_THEME_API = '/add_event_theme';
@@ -76,6 +79,7 @@ const ERROR_MESSAGES_STATUS_CODE = {
 // Event APIs Messages
 const SUCCESS_ADD_EVENT_TYPE_MSG = "Event type added successfully."
 const SUCCESS_UPDATE_EVENT_TYPE_MSG = "Event type updated successfully."
+const SUCCESS_REMOVE_EVENT_TYPE_MSG = "Removed event type successfully.";
 
 // Event Themes APIs Messages
 const SUCCESS_ADD_THEME_MSG = "Event theme added successfully."
@@ -109,6 +113,7 @@ module.exports = {
 
     PSS_USERS,
     PSS_EVENTS_LIST,
+    PSS_SHOP_EVENTS_LIST,
     PSS_EVENT_THEMES_LIST,
     PSS_EVENT_TYPE,
     PSS_EVENT_THEMES,
@@ -121,8 +126,10 @@ module.exports = {
     LOGIN_USER_API,
     FORGOT_PASSWORD_API,
 
-    ADD_EVENT_TYPE_API, 
-    UPDATE_EVENT_TYPE_API,
+    ADD_PSS_EVENTS_API,
+    UPDATE_PSS_EVENTS_API,
+    ADD_SHOP_EVENT_TYPE_API, 
+    REMOVE_EVENT_TYPE_SHOP_API,
     GET_ALL_EVENTS_API,
 
     ADD_EVENT_THEME_API,
@@ -149,6 +156,8 @@ module.exports = {
 
     SUCCESS_ADD_EVENT_TYPE_MSG,
     SUCCESS_UPDATE_EVENT_TYPE_MSG,
+    SUCCESS_REMOVE_EVENT_TYPE_MSG,
+
     SUCCESS_ADD_THEME_MSG,
     SUCCESS_UPDATE_THEME_MSG,
     SUCCESS_ADD_ASSIGNEE_MSG,
