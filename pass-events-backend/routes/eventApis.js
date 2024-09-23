@@ -120,7 +120,7 @@ router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res)
                 WHERE event_id = ? AND shop_id = ?`;
             
             const [checkResult] = await db.query(checkSql, [event_id, shop_id]);
-            
+            console.log("checkResult=", checkResult);
             if (checkResult.count === 0) {
                 // Insert only if no duplicates found
                 const insertSql = `
@@ -139,6 +139,7 @@ router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res)
             message: SUCCESS_ADD_EVENT_TYPE_MSG
         });
     } catch (err) {
+        console.log(err)
         res.status(INTERNAL_SERVER_ERROR).json({ 
             status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
