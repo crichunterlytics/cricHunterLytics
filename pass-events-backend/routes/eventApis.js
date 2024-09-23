@@ -13,7 +13,9 @@ const {
     GET_ALL_EVENTS_API,
     PSS_EVENT_TYPE,
     SUCCESS_ADD_EVENT_TYPE_MSG,
-    SUCCESS_UPDATE_EVENT_TYPE_MSG
+    SUCCESS_UPDATE_EVENT_TYPE_MSG,
+    GET_ALL_PSS_EVENTS_API,
+    PSS_EVENTS_LIST
 } = require("../constants/constant.js");
 
 // POST API : Add New Event Type
@@ -100,7 +102,7 @@ router.put(`${UPDATE_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res) =>
     }
 });
 
-// API : Get All Event Types
+// API : Get All Event Types for shops
 router.get(`${GET_ALL_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
     const { shop_id } = req.params;
       db.query(
@@ -123,5 +125,28 @@ router.get(`${GET_ALL_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
         }
       );
   });
+
+// API : Get All PSS Event Types
+router.get(`${GET_ALL_PSS_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
+      db.query(
+        `SELECT * FROM ${PSS_EVENTS_LIST}`,
+        [],
+        function (error, results, fields) {
+          if (error) {
+            return res.status(BAD_REQUEST_CODE).send({
+              msg: error,
+              err: true,
+              status_code: BAD_REQUEST_CODE,
+              data: []
+            });
+          }
+          return res.status(SUCCESS_STATUS_CODE).send({
+            data: results,
+            err: false,
+            status_code: SUCCESS_STATUS_CODE
+          });
+        }
+      );
+});
 
 module.exports = router;

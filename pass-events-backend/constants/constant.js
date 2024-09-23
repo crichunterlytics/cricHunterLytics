@@ -4,6 +4,8 @@ const JWT_TOKEN_EXPIRY_TIME = '30d';
 
 //Database : Available Tables Constant
 const PSS_USERS = 'pss_shops_user';
+const PSS_EVENTS_LIST = 'pss_events_list';
+const PSS_EVENT_THEMES_LIST = 'pss_themes_list';
 const PSS_EVENT_TYPE = 'pss_event_type';
 const PSS_EVENT_THEMES = 'pss_event_themes';
 const PSS_EVENT_CUSTOMERS = 'pss_event_customers';
@@ -21,12 +23,14 @@ const RESET_PASSWORD_API = '/reset-password';
 const ADD_EVENT_TYPE_API = '/add_event_type';
 const UPDATE_EVENT_TYPE_API = '/update_event_type';
 const GET_ALL_EVENTS_API = '/getAllEvent/:shop_id';
+const GET_ALL_PSS_EVENTS_API = '/get_all_pss_events';
 
 // Event Themes APIs 
 const ADD_EVENT_THEME_API = '/add_event_theme';
 const UPDATE_EVENT_THEME_API = '/update_event_theme';
 const GET_EVENT_THEMES_API = '/getEventThemes/:shop_id/:event_id';
 const GET_EVENT_ALLTHEMES_API = '/getAllEventThemes/:shop_id';
+const GET_PSS_EVENT_THEMES_API = '/get_pss_event_themes';
 
 // Assignee APIs 
 const ADD_ASSIGNEE_API = '/add_assignee';
@@ -104,6 +108,8 @@ module.exports = {
     TOKEN_INVALID_CODE,
 
     PSS_USERS,
+    PSS_EVENTS_LIST,
+    PSS_EVENT_THEMES_LIST,
     PSS_EVENT_TYPE,
     PSS_EVENT_THEMES,
     PSS_EVENT_CUSTOMERS,
@@ -122,11 +128,13 @@ module.exports = {
     ADD_EVENT_THEME_API,
     UPDATE_EVENT_THEME_API, 
     GET_EVENT_THEMES_API,
+    GET_PSS_EVENT_THEMES_API,
 
     ADD_ASSIGNEE_API,    
     UPDATE_ASSIGNEE_API,
     GET_ALL_ASSIGNEE,
     GET_EVENT_ASSIGNEE,
+    GET_ALL_PSS_EVENTS_API,
 
     ADD_CUSTOMER_API,    
     UPDATE_CUSTOMER_API,

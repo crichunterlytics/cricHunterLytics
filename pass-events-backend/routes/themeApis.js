@@ -14,7 +14,9 @@ const {
     PSS_EVENT_THEMES,
     GET_EVENT_ALLTHEMES_API,
     SUCCESS_ADD_THEME_MSG,
-    SUCCESS_UPDATE_THEME_MSG
+    SUCCESS_UPDATE_THEME_MSG,
+    GET_PSS_EVENT_THEMES_API,
+    PSS_EVENT_THEMES_LIST
 } = require("../constants/constant.js");
 
 // POST API : Add New Event Type
@@ -136,6 +138,29 @@ router.get(`${GET_EVENT_THEMES_API}`, midlData.verifyToken, (req, res, next) => 
       db.query(
         `SELECT * FROM ${PSS_EVENT_THEMES} s WHERE s.shop_id = ? AND s.event_id = ? ORDER BY theme_id DESC`,
         [shop_id, event_id],
+        function (error, results, fields) {
+          if (error) {
+            return res.status(BAD_REQUEST_CODE).send({
+              msg: error,
+              err: true,
+              status_code: BAD_REQUEST_CODE,
+              data: []
+            });
+          }
+          return res.status(SUCCESS_STATUS_CODE).send({
+            data: results,
+            err: false,
+            status_code: SUCCESS_STATUS_CODE
+          });
+        }
+      );
+});
+
+// API : Get All PSS Event Themes
+router.get(`${GET_PSS_EVENT_THEMES_API}`, midlData.verifyToken, (req, res, next) => {
+      db.query(
+        `SELECT * FROM ${PSS_EVENT_THEMES_LIST}`,
+        [shop_id],
         function (error, results, fields) {
           if (error) {
             return res.status(BAD_REQUEST_CODE).send({
