@@ -357,21 +357,26 @@ router.get(`${GET_EVENT_THEME_CUSTOMER_API}`, midlData.verifyToken, (req, res, n
 router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, next) => {
   const { shop_id, event_status_list} = req.params;
   let sqlQuery = '';
-  if(event_status_list === 'old_events') {
+  if (event_status_list === 'old_events') {
+    // Get past events including today's that occurred earlier than the current time
     sqlQuery = `SELECT * 
        FROM ${PSS_EVENT_CUSTOMERS} s 
        WHERE s.shop_id = ? 
-       AND DATE(FROM_UNIXTIME(s.event_datetime / 1000)) < CURDATE() 
+       AND (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) < CURDATE() 
+       OR (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
+           AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) < CURTIME())) 
        ORDER BY s.customer_id DESC`;
-  }
-  else {
+  } else {
+    // Get upcoming events, including those happening later today
     sqlQuery = `SELECT * 
-    FROM ${PSS_EVENT_CUSTOMERS} s 
-    WHERE s.shop_id = ? 
-    AND s.event_status = 'next_coming' 
-    AND (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
+       FROM ${PSS_EVENT_CUSTOMERS} s 
+       WHERE s.shop_id = ? 
+       AND s.event_status = 'next_coming' 
+       AND ((DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
+           AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) >= CURTIME()) 
         OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 1 DAY 
-        OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 2 DAY) ORDER BY customer_id DESC`;
+        OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 2 DAY) 
+       ORDER BY s.customer_id DESC`;
   }
 
   db.query(
