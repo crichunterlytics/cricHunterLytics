@@ -112,9 +112,6 @@ router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res)
     const { events, shop_id } = req.body; // Expecting an array of event objects
 
     try {
-        // Start a database transaction
-        await db.beginTransaction();
-
         const sqlCheck = `
             SELECT event_id FROM ${PSS_SHOP_EVENTS_LIST} WHERE shop_id = ? AND event_id = ?`;
 
@@ -124,7 +121,6 @@ router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res)
 
         const promises = events.map(async (event) => {
             const { event_id } = event;
-
             // Check if the combination already exists
             const [rows] = await db.query(sqlCheck, [shop_id, event_id]);
             if (rows.length === 0) {
@@ -145,7 +141,6 @@ router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res)
         });
     } catch (err) {
         // Rollback the transaction in case of error
-        await db.rollback();
         res.status(INTERNAL_SERVER_ERROR).json({ 
             status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
@@ -183,7 +178,6 @@ router.delete(`${REMOVE_EVENT_TYPE_SHOP_API}`, midlData.verifyToken, async (req,
         });
     } catch (err) {
         // Rollback the transaction in case of error
-        await db.rollback();
         res.status(INTERNAL_SERVER_ERROR).json({ 
             status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
