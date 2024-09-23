@@ -109,91 +109,68 @@ router.put(`${UPDATE_PSS_EVENTS_API}`, midlData.verifyToken, async (req, res) =>
 
 // ADD PSS Shops Events
 router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res) => {
-    const events = req.body; // Expecting an array of event objects
-
-    let connection; // Declare the connection variable
+    const events = req.body; // Expecting an array of {event_id, shop_id}
+    
     try {
-        connection = await db.getConnection(); // Get a connection from the pool
-        // Start a database transaction
-        await connection.beginTransaction();
-
-        const sqlCheck = `
-            SELECT event_id FROM ${PSS_SHOP_EVENTS_LIST} WHERE shop_id = ? AND event_id = ?`;
-
-        const sqlInsert = `
-            INSERT INTO ${PSS_SHOP_EVENTS_LIST} (event_id, shop_id)
-            VALUES (?, ?)`;
-
-        for (const event of events) {
-            const { shop_id, event_id } = event;
-
-            // Check if the combination already exists
-            const [rows] = await connection.query(sqlCheck, [shop_id, event_id]);
-            if (rows.length === 0) {
-                // If not, insert the new entry
-                await connection.query(sqlInsert, [event_id, shop_id]);
+        const insertPromises = events.map(async ({ event_id, shop_id }) => {
+            // Check if the event-shop combination already exists
+            const checkSql = `
+                SELECT COUNT(*) AS count 
+                FROM ${PSS_SHOP_EVENTS_LIST} 
+                WHERE event_id = ? AND shop_id = ?`;
+            
+            const [checkResult] = await db.query(checkSql, [event_id, shop_id]);
+            
+            if (checkResult.count === 0) {
+                // Insert only if no duplicates found
+                const insertSql = `
+                    INSERT INTO ${PSS_SHOP_EVENTS_LIST} (event_id, shop_id)
+                    VALUES (?, ?)`;
+                
+                await db.query(insertSql, [event_id, shop_id]);
             }
-        }
+        });
 
-        // Commit the transaction
-        await connection.commit();
+        // Wait for all promises to resolve
+        await Promise.all(insertPromises);
         
         res.status(SUCCESS_STATUS_CODE).json({ 
             status_code: SUCCESS_STATUS_CODE,
             message: SUCCESS_ADD_EVENT_TYPE_MSG
         });
     } catch (err) {
-        if (connection) {
-            // Rollback the transaction in case of error
-            await connection.rollback();
-        }
         res.status(INTERNAL_SERVER_ERROR).json({ 
             status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
         });    
-    } finally {
-        if (connection) {
-            connection.release(); // Release the connection back to the pool if it was created
-        }
     }
 });
 
-
 // REMOVE PSS Shops Events
-router.delete(`${REMOVE_EVENT_TYPE_SHOP_API}`, midlData.verifyToken, async (req, res) => {
-    const { events } = req.body; // Expecting an array of event objects
+router.post(`${REMOVE_EVENT_TYPE_SHOP_API}`, midlData.verifyToken, async (req, res) => {
+    const events = req.body; // Expecting an array of {shop_id, event_id}
 
-    const connection = await db.getConnection(); // Get a connection from the pool
     try {
-        // Start a database transaction
-        await connection.beginTransaction();
+        const deletePromises = events.map(async ({ event_id, shop_id }) => {
+            const deleteSql = `
+                DELETE FROM ${PSS_SHOP_EVENTS_LIST} 
+                WHERE event_id = ? AND shop_id = ?`;
+            
+            await db.query(deleteSql, [event_id, shop_id]);
+        });
 
-        const sqlDelete = `
-            DELETE FROM ${PSS_SHOP_EVENTS_LIST} WHERE shop_id = ? AND event_id = ?`;
-
-        for (const event of events) {
-            const { event_id, shop_id } = event;
-
-            // Delete the entry based on shop_id and event_id
-            await connection.query(sqlDelete, [shop_id, event_id]);
-        }
-
-        // Commit the transaction
-        await connection.commit();
+        // Wait for all delete promises to resolve
+        await Promise.all(deletePromises);
         
         res.status(SUCCESS_STATUS_CODE).json({ 
             status_code: SUCCESS_STATUS_CODE,
             message: SUCCESS_REMOVE_EVENT_TYPE_MSG
         });
     } catch (err) {
-        // Rollback the transaction in case of error
-        await connection.rollback();
         res.status(INTERNAL_SERVER_ERROR).json({ 
             status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
         });    
-    } finally {
-        connection.release(); // Release the connection back to the pool
     }
 });
 
