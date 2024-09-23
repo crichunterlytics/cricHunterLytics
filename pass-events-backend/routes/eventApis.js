@@ -111,8 +111,9 @@ router.put(`${UPDATE_PSS_EVENTS_API}`, midlData.verifyToken, async (req, res) =>
 router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res) => {
     const events = req.body; // Expecting an array of event objects
 
-    const connection = await db.getConnection(); // Get a connection from the pool
+    let connection; // Declare the connection variable
     try {
+        connection = await db.getConnection(); // Get a connection from the pool
         // Start a database transaction
         await connection.beginTransaction();
 
@@ -142,16 +143,21 @@ router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res)
             message: SUCCESS_ADD_EVENT_TYPE_MSG
         });
     } catch (err) {
-        // Rollback the transaction in case of error
-        await connection.rollback();
+        if (connection) {
+            // Rollback the transaction in case of error
+            await connection.rollback();
+        }
         res.status(INTERNAL_SERVER_ERROR).json({ 
             status_code: INTERNAL_SERVER_ERROR,
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
         });    
     } finally {
-        connection.release(); // Release the connection back to the pool
+        if (connection) {
+            connection.release(); // Release the connection back to the pool if it was created
+        }
     }
 });
+
 
 // REMOVE PSS Shops Events
 router.delete(`${REMOVE_EVENT_TYPE_SHOP_API}`, midlData.verifyToken, async (req, res) => {
