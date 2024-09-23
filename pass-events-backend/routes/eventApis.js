@@ -109,7 +109,7 @@ router.put(`${UPDATE_PSS_EVENTS_API}`, midlData.verifyToken, async (req, res) =>
 
 // ADD PSS Shops Events
 router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res) => {
-    const { events, shop_id } = req.body; // Expecting an array of event objects
+    const events = req.body; // Expecting an array of event objects
 
     try {
         const sqlCheck = `
@@ -120,7 +120,7 @@ router.post(`${ADD_SHOP_EVENT_TYPE_API}`, midlData.verifyToken, async (req, res)
             VALUES (?, ?)`;
 
         const promises = events.map(async (event) => {
-            const { event_id } = event;
+            const { shop_id, event_id } = event;
             // Check if the combination already exists
             const [rows] = await db.query(sqlCheck, [shop_id, event_id]);
             if (rows.length === 0) {
