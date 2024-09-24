@@ -237,30 +237,32 @@ router.get(`${GET_ALL_PSS_THEMES_API}`, midlData.verifyToken, (req, res, next) =
 
 // API : Get All Event Types for shops
 router.get(`${GET_ALL_SHOP_THEMES_API}`, midlData.verifyToken, (req, res, next) => {
-    const { event_id, shop_id } = req.params;
-    
-    const sql = `
-        SELECT e.theme_id, e.event_id, e.theme_name se.id, se.shop_id 
-        FROM ${PSS_EVENT_THEMES_LIST} e
-        JOIN ${PSS_SHOP_EVENT_THEMES_LIST} se ON e.theme_id = se.theme_id
-        WHERE se.shop_id = ? AND se.event_id`;
+  const { event_id, shop_id } = req.params;
+  
+  // Correcting the SQL query
+  const sql = `
+      SELECT e.theme_id, e.event_id, e.theme_name, se.id, se.shop_id 
+      FROM ${PSS_EVENT_THEMES_LIST} e
+      JOIN ${PSS_SHOP_EVENT_THEMES_LIST} se ON e.theme_id = se.theme_id
+      WHERE se.shop_id = ? AND se.event_id = ?`;
 
-    db.query(sql, [shop_id, event_id], (error, results) => {
-        if (error) {
-            return res.status(BAD_REQUEST_CODE).send({
-                msg: error,
-                err: true,
-                status_code: BAD_REQUEST_CODE,
-                data: []
-            });
-        }
-        return res.status(SUCCESS_STATUS_CODE).send({
-            data: results,
-            err: false,
-            status_code: SUCCESS_STATUS_CODE
-        });
-    });
+  db.query(sql, [shop_id, event_id], (error, results) => {
+      if (error) {
+          return res.status(BAD_REQUEST_CODE).send({
+              msg: error,
+              err: true,
+              status_code: BAD_REQUEST_CODE,
+              data: []
+          });
+      }
+      return res.status(SUCCESS_STATUS_CODE).send({
+          data: results,
+          err: false,
+          status_code: SUCCESS_STATUS_CODE
+      });
+  });
 });
+
 
 
 module.exports = router;
