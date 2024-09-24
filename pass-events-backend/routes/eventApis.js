@@ -26,21 +26,27 @@ const {
 router.post(`${ADD_PSS_EVENTS_API}`, midlData.verifyToken, async (req, res) => {
     const { 
         event_name,
-        event_description
+        event_description,
+        shop_id // optional field
     } = req.body;
     
+    // Check if shop_id is present and assign restricted_events accordingly
+    const restricted_events = shop_id ? shop_id : 0;
+
     try {
         // Insert the user into the database
         const sql = `
             INSERT INTO ${PSS_EVENTS_LIST} (
                 event_name, 
-                event_description
+                event_description,
+                restricted_events
             )
-            VALUES (?, ?)`;
+            VALUES (?, ?, ?)`;
 
         db.query(sql, [
             event_name,
-            event_description
+            event_description,
+            restricted_events // set restricted_events based on shop_id presence
         ], (err, result) => {
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
@@ -60,6 +66,7 @@ router.post(`${ADD_PSS_EVENTS_API}`, midlData.verifyToken, async (req, res) => {
         });    
     }
 });
+
 
 // Update PSS Event TYpe
 router.put(`${UPDATE_PSS_EVENTS_API}`, midlData.verifyToken, async (req, res) => {
@@ -184,28 +191,41 @@ router.post(`${REMOVE_EVENT_TYPE_SHOP_API}`, midlData.verifyToken, async (req, r
 });
 
 
-// API : Get All PSS Event Types
+// API: Get All PSS Event Types
 router.get(`${GET_ALL_PSS_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
-      db.query(
-        `SELECT * FROM ${PSS_EVENTS_LIST}`,
-        [],
-        function (error, results, fields) {
-          if (error) {
-            return res.status(BAD_REQUEST_CODE).send({
-              msg: error,
-              err: true,
-              status_code: BAD_REQUEST_CODE,
-              data: []
-            });
-          }
-          return res.status(SUCCESS_STATUS_CODE).send({
-            data: results,
-            err: false,
-            status_code: SUCCESS_STATUS_CODE
+    const { shop_id } = req.params;
+  
+    let sqlQuery = `SELECT * FROM ${PSS_EVENTS_LIST} s WHERE `;
+  
+    // If shop_id is provided, add both conditions
+    if (shop_id) {
+      sqlQuery += ` (s.restricted_events = ? OR s.restricted_events = 0)`;
+    } else {
+      // If shop_id is not provided, just return events where restricted_events = 0
+      sqlQuery += ` s.restricted_events = 0`;
+    }
+  
+    db.query(
+      sqlQuery,
+      shop_id ? [shop_id] : [], // Provide shop_id as a parameter if it's present, otherwise an empty array
+      function (error, results, fields) {
+        if (error) {
+          return res.status(BAD_REQUEST_CODE).send({
+            msg: error,
+            err: true,
+            status_code: BAD_REQUEST_CODE,
+            data: []
           });
         }
-      );
-});
+        return res.status(SUCCESS_STATUS_CODE).send({
+          data: results,
+          err: false,
+          status_code: SUCCESS_STATUS_CODE
+        });
+      }
+    );
+  });
+  
 
 // API : Get All Event Types for shops
 router.get(`${GET_ALL_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
