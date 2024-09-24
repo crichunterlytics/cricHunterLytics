@@ -5,7 +5,7 @@ const JWT_TOKEN_EXPIRY_TIME = '30d';
 //Database : Available Tables Constant
 const PSS_USERS = 'pss_shops_user';
 const PSS_EVENTS_LIST = 'pss_events_list';
-const PSS_EVENT_THEMES_LIST = 'pss_themes_list';
+const PSS_EVENT_THEMES_LIST = 'pss_event_themes_list';
 const PSS_SHOP_EVENTS_LIST = 'pss_shops_event_list';
 const PSS_SHOP_EVENT_THEMES_LIST = 'pss_shops_event_theme_list';
 const PSS_EVENT_CUSTOMERS = 'pss_event_customers';
