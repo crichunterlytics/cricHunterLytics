@@ -212,7 +212,7 @@ router.get(`${GET_ALL_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
     const { shop_id } = req.params;
     
     const sql = `
-        SELECT e.*, se.* 
+        SELECT e.event_id, e.event_name, e.event_description, se.id, se.shop_id 
         FROM ${PSS_EVENTS_LIST} e
         JOIN ${PSS_SHOP_EVENTS_LIST} se ON e.event_id = se.event_id
         WHERE se.shop_id = ?`;
