@@ -174,7 +174,7 @@ router.post(`${REMOVE_THEME_TYPE_SHOP_API}`, midlData.verifyToken, async (req, r
     const themes = req.body; // Expecting an array of {shop_id, event_id}
 
     try {
-        const deletePromises = themes.map(async ({ event_id, shop_id }) => {
+        const deletePromises = themes.map(async ({ event_id, shop_id, theme_id }) => {
             const deleteSql = `
                 DELETE FROM ${PSS_SHOP_EVENT_THEMES_LIST} 
                 WHERE event_id = ? AND shop_id = ? AND theme_id = ?`;
