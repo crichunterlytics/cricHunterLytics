@@ -31,8 +31,8 @@ router.post(`${ADD_PSS_THEMES_API}`, midlData.verifyToken, async (req, res) => {
          //optional Field
     } = req.body;
     
-    // Check if shop_id is present and assign restricted_events accordingly
-    const restricted_events = shop_id ? shop_id : 0;
+    // Check if shop_id is present and assign restricted_themes accordingly
+    const restricted_themes = shop_id ? shop_id : 0;
 
     try {
         // Insert the user into the database
@@ -40,14 +40,14 @@ router.post(`${ADD_PSS_THEMES_API}`, midlData.verifyToken, async (req, res) => {
             INSERT INTO ${PSS_EVENT_THEMES_LIST} (
                 theme_name, 
                 event_id,
-                restricted_events
+                restricted_themes
             )
             VALUES (?, ?, ?)`;
 
         db.query(sql, [
             theme_name,
             event_id,
-            restricted_events // set restricted_events based on shop_id presence
+            restricted_themes // set restricted_themes based on shop_id presence
         ], (err, result) => {
           console.log(err);
           console.log(result);
@@ -206,12 +206,12 @@ router.get(`${GET_ALL_PSS_THEMES_API}`, midlData.verifyToken, (req, res, next) =
   // Base query to filter by event_id
   let sqlQuery = `SELECT * FROM ${PSS_EVENT_THEMES_LIST} s WHERE s.event_id = ?`;
 
-  // If shop_id is provided, add conditions for restricted_events
+  // If shop_id is provided, add conditions for restricted_themes
   if (shop_id) {
-    sqlQuery += ` AND (s.restricted_events = ? OR s.restricted_events = 0)`;
+    sqlQuery += ` AND (s.restricted_themes = ? OR s.restricted_themes = 0)`;
   } else {
-    // If shop_id is not provided, only check restricted_events = 0
-    sqlQuery += ` AND s.restricted_events = 0`;
+    // If shop_id is not provided, only check restricted_themes = 0
+    sqlQuery += ` AND s.restricted_themes = 0`;
   }
 
   db.query(
