@@ -49,6 +49,8 @@ router.post(`${ADD_PSS_THEMES_API}`, midlData.verifyToken, async (req, res) => {
             event_id,
             restricted_events // set restricted_events based on shop_id presence
         ], (err, result) => {
+          console.log(err);
+          console.log(result);
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
                     status_code: BAD_REQUEST_CODE,
@@ -90,6 +92,8 @@ router.put(`${UPDATE_PSS_THEMES_API}`, midlData.verifyToken, async (req, res) =>
             event_id,
             theme_id
         ], (err, result) => {
+          console.log(err);
+          console.log(result);
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
                     status_code: BAD_REQUEST_CODE,
@@ -142,6 +146,8 @@ router.post(`${ADD_SHOP_THEME_API}`, midlData.verifyToken, async (req, res) => {
             ) VALUES ?`;
 
         db.query(sql, [values], (err, result) => {
+          console.log(err);
+          console.log(result);
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({
                     status_code: BAD_REQUEST_CODE,
