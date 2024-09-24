@@ -7,8 +7,7 @@ const PSS_USERS = 'pss_shops_user';
 const PSS_EVENTS_LIST = 'pss_events_list';
 const PSS_EVENT_THEMES_LIST = 'pss_themes_list';
 const PSS_SHOP_EVENTS_LIST = 'pss_shops_event_list';
-const PSS_EVENT_TYPE = 'pss_event_type';
-const PSS_EVENT_THEMES = 'pss_event_themes';
+const PSS_SHOP_EVENT_THEMES_LIST = 'pss_shops_event_theme_list';
 const PSS_EVENT_CUSTOMERS = 'pss_event_customers';
 const PSS_EVENT_ASSIGNEES = 'pss_event_assignees';
 
@@ -29,11 +28,12 @@ const GET_ALL_PSS_EVENTS_API = '/get_all_pss_events/:shop_id';
 const GET_ALL_EVENTS_API = '/getAllEvent/:shop_id';
 
 // Event Themes APIs 
-const ADD_EVENT_THEME_API = '/add_event_theme';
-const UPDATE_EVENT_THEME_API = '/update_event_theme';
-const GET_EVENT_THEMES_API = '/getEventThemes/:shop_id/:event_id';
-const GET_EVENT_ALLTHEMES_API = '/getAllEventThemes/:shop_id';
-const GET_PSS_EVENT_THEMES_API = '/get_pss_event_themes';
+const ADD_PSS_THEMES_API = '/add_pss_themes';
+const UPDATE_PSS_THEMES_API = '/update_pss_themes';
+const ADD_SHOP_THEME_API = '/add_shop_event_theme';
+const REMOVE_THEME_TYPE_SHOP_API = '/remove_shop_event_theme';
+const GET_ALL_PSS_THEMES_API = '/get_all_pss_event_themes';
+const GET_ALL_SHOP_THEMES_API = '/get_shop_event_themes/:shop_id/:event_id';
 
 // Assignee APIs 
 const ADD_ASSIGNEE_API = '/add_assignee';
@@ -115,8 +115,7 @@ module.exports = {
     PSS_EVENTS_LIST,
     PSS_SHOP_EVENTS_LIST,
     PSS_EVENT_THEMES_LIST,
-    PSS_EVENT_TYPE,
-    PSS_EVENT_THEMES,
+    PSS_SHOP_EVENT_THEMES_LIST,
     PSS_EVENT_CUSTOMERS,
     PSS_EVENT_ASSIGNEES,
 
@@ -132,10 +131,12 @@ module.exports = {
     REMOVE_EVENT_TYPE_SHOP_API,
     GET_ALL_EVENTS_API,
 
-    ADD_EVENT_THEME_API,
-    UPDATE_EVENT_THEME_API, 
-    GET_EVENT_THEMES_API,
-    GET_PSS_EVENT_THEMES_API,
+    ADD_PSS_THEMES_API,
+    UPDATE_PSS_THEMES_API,
+    ADD_SHOP_THEME_API,
+    REMOVE_THEME_TYPE_SHOP_API,
+    GET_ALL_PSS_THEMES_API,
+    GET_ALL_SHOP_THEMES_API,
 
     ADD_ASSIGNEE_API,    
     UPDATE_ASSIGNEE_API,
