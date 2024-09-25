@@ -52,6 +52,8 @@ const GET_ALL_UPCOMING_EVENT_API = '/get_all_upcoming_events/:shop_id/:event_sta
 const GET_EVENT_UPCOMING_EVENT_API = '/get_upcoming_events/:shop_id/:event_id';
 const GET_EVENT_CUSTOMER_API = '/getEventsCustomers/:shop_id/:event_id';
 const GET_EVENT_THEME_CUSTOMER_API = '/getEventThemesCustomer/:shop_id/:event_id/:theme_id';
+const GET_INDIVIDUAL_CUSTOMER_EVENT = '/get_individual_customer/:shop_id/:customer_id';
+
 
 //Customer Feedback Form
 const ADD_REVIEW_COMMENT_API = "/add_review_comment";
@@ -124,7 +126,7 @@ module.exports = {
     PSS_EVENT_CUSTOMERS,
     PSS_EVENT_ASSIGNEES,
     PSS_FEEDBACK_REVIEW_TABLE,
-    
+
     RESET_PASSWORD_API,
     LOGOUT_API,
     REGISTER_NEW_USER,
@@ -159,6 +161,7 @@ module.exports = {
     GET_EVENT_UPCOMING_EVENT_API,
     GET_EVENT_CUSTOMER_API,
     GET_EVENT_THEME_CUSTOMER_API,
+    GET_INDIVIDUAL_CUSTOMER_EVENT,
 
     ADD_REVIEW_COMMENT_API,
     GET_ALL_REVIEWS,

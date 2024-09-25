@@ -21,7 +21,8 @@ const {
     SUCCESS_ADD_CUSTOMER_MSG,
     SUCCESS_UPDATE_CUSTOMER_MSG,
     SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
-    SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG
+    SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG,
+    GET_INDIVIDUAL_CUSTOMER_EVENT
 } = require("../constants/constant.js");
 
 // POST API : Add New Event Type
@@ -437,6 +438,30 @@ router.get(`${GET_EVENT_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, n
       });
     }
   );
+});
+
+//Get Individual customer details
+router.get(`${GET_INDIVIDUAL_CUSTOMER_EVENT}`, midlData.verifyToken, (req, res, next) => {
+  const { shop_id, customer_id } = req.params;
+    db.query(
+      `SELECT * FROM ${PSS_EVENT_CUSTOMERS} s WHERE s.shop_id = ? AND s.customer_id = ?`,
+      [shop_id, customer_id],
+      function (error, results, fields) {
+        if (error) {
+          return res.status(BAD_REQUEST_CODE).send({
+            msg: error,
+            err: true,
+            status_code: BAD_REQUEST_CODE,
+            data: []
+          });
+        }
+        return res.status(SUCCESS_STATUS_CODE).send({
+          data: results,
+          err: false,
+          status_code: SUCCESS_STATUS_CODE
+        });
+      }
+    );
 });
 
 
