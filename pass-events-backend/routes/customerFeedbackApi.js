@@ -58,6 +58,7 @@ router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) 
             review_comment,
             shop_id
         ], (err, result) => {
+            console.log(err)
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
                     status_code: BAD_REQUEST_CODE,
@@ -70,6 +71,7 @@ router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) 
             });
         });
     } catch (err) {
+        console.log(err)
         res.status(INTERNAL_SERVER_ERROR).json({
             status_code: INTERNAL_SERVER_ERROR, 
             error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
