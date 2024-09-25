@@ -10,6 +10,7 @@ const PSS_SHOP_EVENTS_LIST = 'pss_shops_event_list';
 const PSS_SHOP_EVENT_THEMES_LIST = 'pss_shops_event_theme_list';
 const PSS_EVENT_CUSTOMERS = 'pss_event_customers';
 const PSS_EVENT_ASSIGNEES = 'pss_event_assignees';
+const PSS_FEEDBACK_REVIEW_TABLE = 'pss_event_feedback_review';
 
 //Login and signup level APIS
 const REGISTER_NEW_USER = '/register';
@@ -122,7 +123,8 @@ module.exports = {
     PSS_SHOP_EVENT_THEMES_LIST,
     PSS_EVENT_CUSTOMERS,
     PSS_EVENT_ASSIGNEES,
-
+    PSS_FEEDBACK_REVIEW_TABLE,
+    
     RESET_PASSWORD_API,
     LOGOUT_API,
     REGISTER_NEW_USER,

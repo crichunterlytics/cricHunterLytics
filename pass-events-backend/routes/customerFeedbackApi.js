@@ -10,8 +10,8 @@ const {
     INTERNAL_SERVER_ERROR, 
     ADD_REVIEW_COMMENT_API,
     GET_EVENT_ASSIGNEE,
-    GET_ALL_REVIEWS, // Make sure this points to the TABLE NAME
     SUCCESS_ADD_ASSIGNEE_MSG,
+    PSS_FEEDBACK_REVIEW_TABLE,
 } = require("../constants/constant.js");
 
 // POST API : Add New Review Comment
@@ -32,7 +32,7 @@ router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) 
     try {
         // Insert review comment into the database
         const sql = `
-            INSERT INTO ${GET_ALL_REVIEWS} (
+            INSERT INTO ${PSS_FEEDBACK_REVIEW_TABLE} (
                 event_id,
                 event_name,
                 customer_name,
@@ -89,7 +89,7 @@ router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
         });
     }
 
-    const sql = `SELECT * FROM ${GET_ALL_REVIEWS} s WHERE s.shop_id = ? ORDER BY review_id DESC`;
+    const sql = `SELECT * FROM ${PSS_FEEDBACK_REVIEW_TABLE} s WHERE s.shop_id = ? ORDER BY review_id DESC`;
 
     db.query(sql, [shop_id], function (error, results) { // Only passing shop_id
         if (error) {
