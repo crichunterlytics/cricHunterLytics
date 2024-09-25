@@ -12,6 +12,7 @@ const {
     SUCCESS_ADD_ASSIGNEE_MSG,
     PSS_FEEDBACK_REVIEW_TABLE,
     GET_ALL_REVIEWS,
+    GET_INDIVIDUAL_CUSTOMER_REVIEWS,
 } = require("../constants/constant.js");
 
 // POST API : Add New Review Comment
@@ -32,7 +33,7 @@ router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) 
     try {
         // Insert review comment into the database
         const sql = `
-            INSERT INTO ${PSS_FEEDBACK_REVIEW_TABLE} (
+            INSERT IGNORE INTO ${PSS_FEEDBACK_REVIEW_TABLE} (
                 event_id,
                 event_name,
                 customer_name,
@@ -115,5 +116,52 @@ router.get(`${GET_ALL_REVIEWS}`, midlData.verifyToken, (req, res, next) => {
         });
     });
 });
+
+// API : Get Individual customer reviews
+router.get(`${GET_INDIVIDUAL_CUSTOMER_REVIEWS}`, midlData.verifyToken, (req, res) => {
+    const { shop_id, customer_id } = req.query; // Get query params
+
+    // Check for missing parameters
+    if (!shop_id || !customer_id) {
+        return res.status(BAD_REQUEST_CODE).json({
+            status_code: BAD_REQUEST_CODE,
+            error: "Shop ID and Customer ID are required"
+        });
+    }
+
+    // SQL query to fetch reviews based on shop_id and customer_id
+    const sql = `SELECT * FROM ${PSS_FEEDBACK_REVIEW_TABLE} s WHERE s.shop_id = ? AND s.customer_id = ?`;
+
+    // Execute the query
+    db.query(sql, [shop_id, customer_id], function (error, results) {
+        // Handle SQL errors
+        if (error) {
+            return res.status(BAD_REQUEST_CODE).json({
+                msg: error.message || "Database error",
+                err: true,
+                status_code: BAD_REQUEST_CODE,
+                data: []
+            });
+        }
+
+        // Handle case when no reviews are found
+        if (results.length === 0) {
+            return res.status(SUCCESS_STATUS_CODE).json({
+                data: [],
+                err: false,
+                status_code: SUCCESS_STATUS_CODE,
+                message: "No reviews found for the given customer"
+            });
+        }
+
+        // Return the fetched reviews
+        return res.status(SUCCESS_STATUS_CODE).json({
+            data: results,
+            err: false,
+            status_code: SUCCESS_STATUS_CODE
+        });
+    });
+});
+
 
 module.exports = router;

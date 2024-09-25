@@ -58,6 +58,7 @@ const GET_INDIVIDUAL_CUSTOMER_EVENT = '/get_individual_customer/:shop_id/:custom
 //Customer Feedback Form
 const ADD_REVIEW_COMMENT_API = "/add_review_comment";
 const GET_ALL_REVIEWS = "/get_event_reviews";
+const GET_INDIVIDUAL_CUSTOMER_REVIEWS = "/get_individual_event_reviews";
 
 //api RETURN STATUS CODE
 const BAD_REQUEST_CODE = 400;
@@ -165,6 +166,7 @@ module.exports = {
 
     ADD_REVIEW_COMMENT_API,
     GET_ALL_REVIEWS,
+    GET_INDIVIDUAL_CUSTOMER_REVIEWS,
 
     SUCCESS_ADD_EVENT_TYPE_MSG,
     SUCCESS_UPDATE_EVENT_TYPE_MSG,
