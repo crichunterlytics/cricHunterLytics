@@ -52,6 +52,10 @@ const GET_EVENT_UPCOMING_EVENT_API = '/get_upcoming_events/:shop_id/:event_id';
 const GET_EVENT_CUSTOMER_API = '/getEventsCustomers/:shop_id/:event_id';
 const GET_EVENT_THEME_CUSTOMER_API = '/getEventThemesCustomer/:shop_id/:event_id/:theme_id';
 
+//Customer Feedback Form
+const ADD_REVIEW_COMMENT_API = "/add_review_comment";
+const GET_ALL_REVIEWS = "/get_event_reviews";
+
 //api RETURN STATUS CODE
 const BAD_REQUEST_CODE = 400;
 const UNAUTHORIZED_CODE = 401;
@@ -153,6 +157,9 @@ module.exports = {
     GET_EVENT_UPCOMING_EVENT_API,
     GET_EVENT_CUSTOMER_API,
     GET_EVENT_THEME_CUSTOMER_API,
+
+    ADD_REVIEW_COMMENT_API,
+    GET_ALL_REVIEWS,
 
     SUCCESS_ADD_EVENT_TYPE_MSG,
     SUCCESS_UPDATE_EVENT_TYPE_MSG,

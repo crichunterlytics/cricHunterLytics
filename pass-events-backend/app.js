@@ -30,12 +30,14 @@ const router1 = require('./routes/eventApis');
 const router2 = require('./routes/themeApis');
 const router3 = require('./routes/assigneesApis');
 const router4 = require('./routes/customersApis');
+const router5 = require('./routes/customerFeedbackApi');
 
 app.use('/api', router);
 app.use('/api/event', router1);
 app.use('/api/theme', router2);
 app.use('/api/assignee', router3);
 app.use('/api/customer', router4);
+app.use('/api/review', router5);
 
 // Serve static files from the "images" directory
 // app.use('/images', express.static(path.join(__dirname, 'images')));
