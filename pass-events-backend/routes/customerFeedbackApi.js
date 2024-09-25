@@ -10,11 +10,11 @@ const {
     INTERNAL_SERVER_ERROR, 
     ADD_REVIEW_COMMENT_API,
     GET_EVENT_ASSIGNEE,
-    GET_ALL_REVIEWS,
+    GET_ALL_REVIEWS, // Make sure this points to the TABLE NAME
     SUCCESS_ADD_ASSIGNEE_MSG,
 } = require("../constants/constant.js");
 
-// POST API : Add New Event Type
+// POST API : Add New Review Comment
 router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) => {
     const { 
         event_id,
@@ -30,7 +30,7 @@ router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) 
     } = req.body;
     
     try {
-        // Insert the user into the database
+        // Insert review comment into the database
         const sql = `
             INSERT INTO ${GET_ALL_REVIEWS} (
                 event_id,
@@ -58,8 +58,6 @@ router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) 
             review_comment,
             shop_id
         ], (err, result) => {
-          console.log(err);
-          console.log(result)
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
                     status_code: BAD_REQUEST_CODE,
@@ -81,27 +79,39 @@ router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) 
 
 // API : Get All customer reviews
 router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
-    const { shop_id } = req.query;
-      db.query(
-        `SELECT * FROM ${GET_ALL_REVIEWS} s WHERE s.shop_id = ? ORDER BY review_id DESC`,
-        [shop_id, event_id],
-        function (error, results, fields) {
-          if (error) {
+    const { shop_id } = req.query; // Query param to handle shop_id
+    if (!shop_id) {
+        return res.status(BAD_REQUEST_CODE).json({
+            status_code: BAD_REQUEST_CODE,
+            error: "Shop ID is required"
+        });
+    }
+
+    const sql = `SELECT * FROM ${GET_ALL_REVIEWS} s WHERE s.shop_id = ? ORDER BY review_id DESC`;
+
+    db.query(sql, [shop_id], function (error, results) { // Only passing shop_id
+        if (error) {
             return res.status(BAD_REQUEST_CODE).send({
-              msg: error,
-              err: true,
-              status_code: BAD_REQUEST_CODE,
-              data: []
+                msg: error,
+                err: true,
+                status_code: BAD_REQUEST_CODE,
+                data: []
             });
-          }
-          return res.status(SUCCESS_STATUS_CODE).send({
+        }
+        if (results.length === 0) {
+            return res.status(SUCCESS_STATUS_CODE).send({
+                data: [],
+                err: false,
+                status_code: SUCCESS_STATUS_CODE,
+                message: "No reviews found"
+            });
+        }
+        return res.status(SUCCESS_STATUS_CODE).send({
             data: results,
             err: false,
             status_code: SUCCESS_STATUS_CODE
-          });
-        }
-      );
+        });
+    });
 });
-
 
 module.exports = router;
