@@ -9,9 +9,9 @@ const {
     SUCCESS_STATUS_CODE, 
     INTERNAL_SERVER_ERROR, 
     ADD_REVIEW_COMMENT_API,
-    GET_EVENT_ASSIGNEE,
     SUCCESS_ADD_ASSIGNEE_MSG,
     PSS_FEEDBACK_REVIEW_TABLE,
+    GET_ALL_REVIEWS,
 } = require("../constants/constant.js");
 
 // POST API : Add New Review Comment
@@ -80,7 +80,7 @@ router.post(`${ADD_REVIEW_COMMENT_API}`, midlData.verifyToken, async (req, res) 
 });
 
 // API : Get All customer reviews
-router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
+router.get(`${GET_ALL_REVIEWS}`, midlData.verifyToken, (req, res, next) => {
     const { shop_id } = req.query; // Query param to handle shop_id
     if (!shop_id) {
         return res.status(BAD_REQUEST_CODE).json({
