@@ -193,7 +193,7 @@ router.post(`${REMOVE_EVENT_TYPE_SHOP_API}`, midlData.verifyToken, async (req, r
 
 // API: Get All PSS Event Types
 router.get(`${GET_ALL_PSS_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
-    const { shop_id } = req.params;
+    const { shop_id } = req.query;
   
     let sqlQuery = `SELECT * FROM ${PSS_EVENTS_LIST} s WHERE `;
   

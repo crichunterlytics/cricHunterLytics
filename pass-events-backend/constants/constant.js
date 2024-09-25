@@ -24,7 +24,7 @@ const ADD_PSS_EVENTS_API = '/add_pss_events';
 const UPDATE_PSS_EVENTS_API = '/update_pss_events';
 const ADD_SHOP_EVENT_TYPE_API = '/add_shop_event_type';
 const REMOVE_EVENT_TYPE_SHOP_API = '/remove_shop_event_type';
-const GET_ALL_PSS_EVENTS_API = '/get_all_pss_events/:shop_id';
+const GET_ALL_PSS_EVENTS_API = '/get_all_pss_events';
 const GET_ALL_EVENTS_API = '/getAllEvent/:shop_id';
 
 // Event Themes APIs 
