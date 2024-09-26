@@ -53,6 +53,7 @@ const GET_EVENT_UPCOMING_EVENT_API = '/get_upcoming_events/:shop_id/:event_id';
 const GET_EVENT_CUSTOMER_API = '/getEventsCustomers/:shop_id/:event_id';
 const GET_EVENT_THEME_CUSTOMER_API = '/getEventThemesCustomer/:shop_id/:event_id/:theme_id';
 const GET_INDIVIDUAL_CUSTOMER_EVENT = '/get_individual_customer/:shop_id/:customer_id';
+const GET_CUSTOMER_EVENTS_API = '/get_customer_events_api';
 
 
 //Customer Feedback Form
@@ -163,7 +164,8 @@ module.exports = {
     GET_EVENT_CUSTOMER_API,
     GET_EVENT_THEME_CUSTOMER_API,
     GET_INDIVIDUAL_CUSTOMER_EVENT,
-
+    GET_CUSTOMER_EVENTS_API,
+    
     ADD_REVIEW_COMMENT_API,
     GET_ALL_REVIEWS,
     GET_INDIVIDUAL_CUSTOMER_REVIEWS,

@@ -22,7 +22,8 @@ const {
     SUCCESS_UPDATE_CUSTOMER_MSG,
     SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
     SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG,
-    GET_INDIVIDUAL_CUSTOMER_EVENT
+    GET_INDIVIDUAL_CUSTOMER_EVENT,
+    GET_CUSTOMER_EVENTS_API
 } = require("../constants/constant.js");
 
 // POST API : Add New Event Type
@@ -463,6 +464,48 @@ router.get(`${GET_INDIVIDUAL_CUSTOMER_EVENT}`, midlData.verifyToken, (req, res, 
       }
     );
 });
+
+router.get(`${GET_CUSTOMER_EVENTS_API}`, midlData.verifyToken, (req, res, next) => {
+  const { shop_id, event_status } = req.query;
+
+  // Validate that shop_id is provided
+  if (!shop_id) {
+    return res.status(BAD_REQUEST_CODE).json({
+      status_code: BAD_REQUEST_CODE,
+      error: "Shop ID is required"
+    });
+  }
+
+  // Start building the SQL query
+  let sqlQuery = `SELECT * FROM ${PSS_EVENT_CUSTOMERS} s WHERE s.shop_id = ?`;
+  const queryParams = [shop_id]; // Initialize with shop_id
+
+  // Append condition for event_status if it exists
+  if (event_status) {
+    sqlQuery += ` AND s.event_status = ?`;
+    queryParams.push(event_status); // Add event_status to query parameters
+  }
+
+  // Execute the query
+  db.query(sqlQuery, queryParams, function (error, results) {
+    if (error) {
+      console.error('Database query error:', error); // Log the error for debugging
+      return res.status(BAD_REQUEST_CODE).send({
+        msg: 'Database query failed',
+        err: true,
+        status_code: BAD_REQUEST_CODE,
+        data: []
+      });
+    }
+
+    return res.status(SUCCESS_STATUS_CODE).send({
+      data: results,
+      err: false,
+      status_code: SUCCESS_STATUS_CODE
+    });
+  });
+});
+
 
 
 module.exports = router;
