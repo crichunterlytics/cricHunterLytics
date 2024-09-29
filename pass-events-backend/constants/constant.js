@@ -11,6 +11,7 @@ const PSS_SHOP_EVENT_THEMES_LIST = 'pss_shops_event_theme_list';
 const PSS_EVENT_CUSTOMERS = 'pss_event_customers';
 const PSS_EVENT_ASSIGNEES = 'pss_event_assignees';
 const PSS_FEEDBACK_REVIEW_TABLE = 'pss_event_feedback_review';
+const PSS_PACKAGES_TABLE = 'packages_data';
 
 //Login and signup level APIS
 const REGISTER_NEW_USER = '/register';
@@ -61,6 +62,16 @@ const ADD_REVIEW_COMMENT_API = "/add_review_comment";
 const GET_ALL_REVIEWS = "/get_event_reviews";
 const GET_INDIVIDUAL_CUSTOMER_REVIEWS = "/get_individual_event_reviews";
 
+//Event Packages APIs
+const ADD_PACKAGES_API = '/add_packages';
+const UPDATE_PACKAGES_API = '/update_packages';
+const DELETE_PACKAGES_API = '/delete_pckages';
+const GET_PACKAGES_API = '/get_packages';
+// const ADD_SHOP_EVENT_TYPE_API = '/add_shop_event_type';
+// const REMOVE_EVENT_TYPE_SHOP_API = '/remove_shop_event_type';
+// const GET_ALL_PSS_EVENTS_API = '/get_all_pss_events';
+// const GET_ALL_EVENTS_API = '/getAllEvent/:shop_id';
+
 //api RETURN STATUS CODE
 const BAD_REQUEST_CODE = 400;
 const UNAUTHORIZED_CODE = 401;
@@ -104,6 +115,8 @@ const SUCCESS_UPDATE_CUSTOMER_MSG = "Customer updated successfully."
 const SUCCESS_UPDATE_CUSTOMER_STATUS_MSG = "Customer status updated successfully."
 const SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG = "Customer assignee updated successfully."
 
+// Packages API
+const SUCCESS_ADD_PACKAGE_MSG = "Packages added successfully."
 
 module.exports = {
     JWT_SECRET_KEY,
@@ -128,6 +141,7 @@ module.exports = {
     PSS_EVENT_CUSTOMERS,
     PSS_EVENT_ASSIGNEES,
     PSS_FEEDBACK_REVIEW_TABLE,
+    PSS_PACKAGES_TABLE,
 
     RESET_PASSWORD_API,
     LOGOUT_API,
@@ -170,6 +184,11 @@ module.exports = {
     GET_ALL_REVIEWS,
     GET_INDIVIDUAL_CUSTOMER_REVIEWS,
 
+    ADD_PACKAGES_API,
+    UPDATE_PACKAGES_API,
+    DELETE_PACKAGES_API,
+    GET_PACKAGES_API,
+
     SUCCESS_ADD_EVENT_TYPE_MSG,
     SUCCESS_UPDATE_EVENT_TYPE_MSG,
     SUCCESS_REMOVE_EVENT_TYPE_MSG,
@@ -181,5 +200,6 @@ module.exports = {
     SUCCESS_ADD_CUSTOMER_MSG,
     SUCCESS_UPDATE_CUSTOMER_MSG,
     SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
-    SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG
+    SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG,
+    SUCCESS_ADD_PACKAGE_MSG
 }
