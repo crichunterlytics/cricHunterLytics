@@ -72,6 +72,7 @@ const GET_PACKAGES_API = '/get_packages';
 // const GET_ALL_PSS_EVENTS_API = '/get_all_pss_events';
 // const GET_ALL_EVENTS_API = '/getAllEvent/:shop_id';
 
+
 //api RETURN STATUS CODE
 const BAD_REQUEST_CODE = 400;
 const UNAUTHORIZED_CODE = 401;
@@ -117,6 +118,15 @@ const SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG = "Customer assignee updated successf
 
 // Packages API
 const SUCCESS_ADD_PACKAGE_MSG = "Packages added successfully."
+
+// Add these constants in your constants file
+const BANQUET_DATA_TABLE = 'Banquet_data';
+const ADD_BANQUET_API = '/api/banquets/add';
+const UPDATE_BANQUET_API = '/api/banquets/update';
+const DELETE_BANQUET_API = '/api/banquets/delete';
+const GET_BANQUET_API = '/api/banquets';
+const SUCCESS_ADD_BANQUET_MSG = 'Banquet added successfully';
+
 
 module.exports = {
     JWT_SECRET_KEY,
@@ -201,5 +211,12 @@ module.exports = {
     SUCCESS_UPDATE_CUSTOMER_MSG,
     SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
     SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG,
-    SUCCESS_ADD_PACKAGE_MSG
+    SUCCESS_ADD_PACKAGE_MSG,
+    
+    BANQUET_DATA_TABLE,
+    ADD_BANQUET_API,
+    UPDATE_BANQUET_API,
+    DELETE_BANQUET_API,
+    GET_BANQUET_API,
+    SUCCESS_ADD_BANQUET_MSG
 }
