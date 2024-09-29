@@ -116,6 +116,7 @@ const SUCCESS_ADD_CUSTOMER_MSG = "Customer added successfully."
 const SUCCESS_UPDATE_CUSTOMER_MSG = "Customer updated successfully."
 const SUCCESS_UPDATE_CUSTOMER_STATUS_MSG = "Customer status updated successfully."
 const SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG = "Customer assignee updated successfully."
+const SUCCESS_UPDATE_CUSTOMER_PAYMENTS_MSG = "Customer payments updated successfully."
 
 // Packages API
 const SUCCESS_ADD_PACKAGE_MSG = "Packages added successfully."
@@ -214,6 +215,7 @@ module.exports = {
     SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
     SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG,
     SUCCESS_ADD_PACKAGE_MSG,
+    SUCCESS_UPDATE_CUSTOMER_PAYMENTS_MSG,
 
     BANQUET_DATA_TABLE,
     ADD_BANQUET_API,

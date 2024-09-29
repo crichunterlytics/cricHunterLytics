@@ -3,8 +3,6 @@ const router = express.Router();
 const midlData = require('../middleware/token_interpreter.js');
 const {
   BAD_REQUEST_CODE,
-  SUCCESS_MESSAGES,
-  SQL_QUERIES,
   ADD_CUSTOMER_API,
   UPDATE_CUSTOMER_API,
   UPDATE_EVENT_STATUS_API,
@@ -17,6 +15,11 @@ const {
   GET_INDIVIDUAL_CUSTOMER_EVENT,
   GET_CUSTOMER_EVENTS_API,
   PSS_EVENT_CUSTOMERS,
+  SUCCESS_ADD_CUSTOMER_MSG,
+  SUCCESS_UPDATE_CUSTOMER_MSG,
+  SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
+  SUCCESS_UPDATE_CUSTOMER_PAYMENTS_MSG,
+  SUCCESS_UPDATE_ASSIGNEE_MSG,
 } = require("../constants/constant.js");
 const { executeQuery } = require("../utils/executeQueryFun.js");
 
@@ -77,7 +80,7 @@ router.post(ADD_CUSTOMER_API, midlData.verifyToken, async (req, res) => {
     event_datetime,
     event_status,
     loyalty_amount,
-  ], res, SUCCESS_MESSAGES.ADD_CUSTOMER);
+  ], res, SUCCESS_ADD_CUSTOMER_MSG);
 });
 
 // PUT API : Update Customer
@@ -137,7 +140,7 @@ router.put(UPDATE_CUSTOMER_API, midlData.verifyToken, async (req, res) => {
     loyalty_amount,
     shop_id,
     customer_id,
-  ], res, SUCCESS_MESSAGES.UPDATE_CUSTOMER);
+  ], res, SUCCESS_UPDATE_CUSTOMER_MSG);
 });
 
 // PUT API : Update Event Status
@@ -147,7 +150,7 @@ router.put(UPDATE_EVENT_STATUS_API, midlData.verifyToken, async (req, res) => {
   SET event_status = ?
   WHERE shop_id = ? AND event_id = ? AND customer_id = ?`;
 
-  await executeQuery(sql, [event_status, shop_id, event_id, customer_id], res, SUCCESS_MESSAGES.UPDATE_EVENT_STATUS);
+  await executeQuery(sql, [event_status, shop_id, event_id, customer_id], res, SUCCESS_UPDATE_CUSTOMER_STATUS_MSG);
 });
 
 // PUT API : Update Payments
@@ -160,7 +163,7 @@ router.put(UPDATE_EVENT_PAYMENTS_API, midlData.verifyToken, async (req, res) => 
     remaining_amount = ?
   WHERE shop_id = ? AND event_id = ? AND customer_id = ?`;
 
-  await executeQuery(sql, [total_amount, advance_amount, remaining_amount, shop_id, event_id, customer_id], res, SUCCESS_MESSAGES.UPDATE_PAYMENTS);
+  await executeQuery(sql, [total_amount, advance_amount, remaining_amount, shop_id, event_id, customer_id], res, SUCCESS_UPDATE_CUSTOMER_PAYMENTS_MSG);
 });
 
 // PUT API : Update Event Assignee
@@ -174,7 +177,7 @@ router.put(UPDATE_EVENT_ASSIGNEE_API, midlData.verifyToken, async (req, res) => 
     assignee_mobile_number = ?
   WHERE shop_id = ? AND event_id = ? AND customer_id = ?`;
 
-  await executeQuery(sql, [assignee_name, assignee_id, assignee_mobile_number, shop_id, event_id, customer_id], res, SUCCESS_MESSAGES.UPDATE_ASSIGNEE);
+  await executeQuery(sql, [assignee_name, assignee_id, assignee_mobile_number, shop_id, event_id, customer_id], res, SUCCESS_UPDATE_ASSIGNEE_MSG);
 });
 
 // GET API : Get All Customers
@@ -185,7 +188,7 @@ router.get(GET_ALL_CUSTOMER_API, midlData.verifyToken, async (req, res) => {
   WHERE shop_id = ?
   ORDER BY customer_id DESC`;
 
-  await executeQuery(sql, [shop_id], res, SUCCESS_MESSAGES.FETCH_ALL_CUSTOMERS);
+  await executeQuery(sql, [shop_id], res, "Successful");
 });
 
 // GET API : Get Customers by Event
@@ -196,7 +199,7 @@ router.get(GET_EVENT_CUSTOMER_API, midlData.verifyToken, async (req, res) => {
   WHERE shop_id = ? AND event_id = ?
   ORDER BY customer_id DESC`;
 
-  await executeQuery(sql, [shop_id, event_id], res, SUCCESS_MESSAGES.FETCH_EVENT_CUSTOMERS);
+  await executeQuery(sql, [shop_id, event_id], res, "Successful");
 });
 
 // GET API : Get Customers by Event and Theme
@@ -207,7 +210,7 @@ router.get(GET_EVENT_THEME_CUSTOMER_API, midlData.verifyToken, async (req, res) 
   WHERE shop_id = ? AND event_id = ? AND theme_id = ?
   ORDER BY customer_id DESC`;
 
-  await executeQuery(sql, [shop_id, event_id, theme_id], res, SUCCESS_MESSAGES.FETCH_THEME_CUSTOMERS);
+  await executeQuery(sql, [shop_id, event_id, theme_id], res, "Successful");
 });
 
 // GET API : Get Upcoming Events
@@ -232,7 +235,7 @@ router.get(GET_ALL_UPCOMING_EVENT_API, midlData.verifyToken, async (req, res) =>
        AND (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) BETWEEN CURDATE() AND CURDATE() + INTERVAL 20 DAY) 
        ORDER BY s.customer_id DESC`;
   }
-  await executeQuery(sqlQuery, [shop_id], res, SUCCESS_MESSAGES.FETCH_UPCOMING_EVENTS);
+  await executeQuery(sqlQuery, [shop_id], res, "Successful");
 });
 
 // GET API : Get Individual Customer Details
@@ -240,7 +243,7 @@ router.get(GET_INDIVIDUAL_CUSTOMER_EVENT, midlData.verifyToken, async (req, res)
   const { shop_id, customer_id } = req.params;
   const sql = `SELECT * FROM ${PSS_EVENT_CUSTOMERS} s WHERE s.shop_id = ? AND s.customer_id = ?`;
 
-  await executeQuery(sql, [shop_id, customer_id], res, SUCCESS_MESSAGES.FETCH_CUSTOMER_DETAILS);
+  await executeQuery(sql, [shop_id, customer_id], res, "Successful");
 });
 
 // GET API : Get Customer Events by Status
@@ -255,14 +258,14 @@ router.get(GET_CUSTOMER_EVENTS_API, midlData.verifyToken, async (req, res) => {
   }
 
   let sql = `SELECT * FROM ${PSS_EVENT_CUSTOMERS} s WHERE s.shop_id = ?`;
-  
+
   const params = [shop_id];
   if (event_status) {
     sql += ` AND event_status = ?`;
     params.push(event_status);
   }
 
-  await executeQuery(sql, params, res, SUCCESS_MESSAGES.FETCH_CUSTOMER_EVENTS);
+  await executeQuery(sql, params, res, "Successful");
 });
 
 module.exports = router;
