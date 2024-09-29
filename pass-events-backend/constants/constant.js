@@ -121,10 +121,10 @@ const SUCCESS_ADD_PACKAGE_MSG = "Packages added successfully."
 
 // Add these constants in your constants file
 const BANQUET_DATA_TABLE = 'Banquet_data';
-const ADD_BANQUET_API = '/api/banquets/add';
-const UPDATE_BANQUET_API = '/api/banquets/update';
-const DELETE_BANQUET_API = '/api/banquets/delete';
-const GET_BANQUET_API = '/api/banquets';
+const ADD_BANQUET_API = '/add_banquet';
+const UPDATE_BANQUET_API = '/update_banquet';
+const DELETE_BANQUET_API = '/delete_banquet';
+const GET_BANQUET_API = '/get_banquets';
 const SUCCESS_ADD_BANQUET_MSG = 'Banquet added successfully';
 
 
@@ -212,7 +212,7 @@ module.exports = {
     SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
     SUCCESS_UPDATE_CUSTOMER_ASSIGNEE_MSG,
     SUCCESS_ADD_PACKAGE_MSG,
-    
+
     BANQUET_DATA_TABLE,
     ADD_BANQUET_API,
     UPDATE_BANQUET_API,
