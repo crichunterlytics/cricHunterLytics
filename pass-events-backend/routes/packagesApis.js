@@ -170,7 +170,7 @@ router.delete(`${DELETE_PACKAGES_API}`, midlData.verifyToken, async (req, res) =
 
 // Get Packages
 router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
-    const { shop_id, restricted_package, event_id, theme_id } = req.query; // Get shop_id and optional restricted_package
+    const { shop_id, restricted_package, event_id, theme_id } = req.query; // Get query parameters
 
     if (!shop_id) {
         return res.status(BAD_REQUEST_CODE).json({
@@ -183,22 +183,48 @@ router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
     let sqlQuery = `SELECT * FROM ${PSS_PACKAGES_TABLE} WHERE shop_id = ?`;
     const queryParams = [shop_id];
 
+    // Initialize a condition for additional filters
+    const conditions = [];
+
     // Check if restricted_package is provided
     if (restricted_package !== undefined) {
-        sqlQuery += ` AND restricted_package = ?`;
+        conditions.push(`restricted_package = ?`);
         queryParams.push(restricted_package);
     }
 
     // Check if event_id is provided
     if (event_id !== undefined) {
-        sqlQuery += ` AND event_id = ?`;
+        conditions.push(`event_id = ?`);
         queryParams.push(event_id);
     }
 
     // Check if theme_id is provided
     if (theme_id !== undefined) {
-        sqlQuery += ` AND theme_id = ?`;
+        conditions.push(`theme_id = ?`);
         queryParams.push(theme_id);
+    }
+
+    // Add conditions for including event_id = 0 and theme_id = 0
+    // We will modify the condition logic to achieve the desired results.
+    let additionalConditions = [];
+
+    if (event_id !== undefined) {
+        additionalConditions.push(`(event_id = ? OR (event_id = 0 AND theme_id = 0))`);
+        queryParams.push(event_id);
+    } else {
+        additionalConditions.push(`event_id = 0 AND theme_id = 0`);
+    }
+
+    if (theme_id !== undefined) {
+        additionalConditions.push(`theme_id = ?`);
+        queryParams.push(theme_id);
+    }
+
+    // Combine all conditions
+    if (conditions.length > 0 || additionalConditions.length > 0) {
+        sqlQuery += ` AND (`;
+        sqlQuery += conditions.concat(additionalConditions).join(' OR ');
+        sqlQuery += `)`;
     }
 
     try {
@@ -230,5 +256,6 @@ router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
         });
     }
 });
+
 
 module.exports = router;
