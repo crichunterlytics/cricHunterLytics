@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const midlData = require('../middleware/token_interpreter.js');
-const { executeQuery } = require("../utils/executeQuery.js");
 
 const {  
     BAD_REQUEST_CODE, 
@@ -16,6 +15,7 @@ const {
     SUCCESS_ADD_ASSIGNEE_MSG,
     SUCCESS_UPDATE_ASSIGNEE_MSG
 } = require("../constants/constant.js");
+const { executeQuery } = require("../utils/executeQueryFun.js");
 
 // POST API : Add New Event Type
 router.post(`${ADD_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
