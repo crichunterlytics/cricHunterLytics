@@ -86,8 +86,9 @@ router.post(`${LOGIN_USER_API}`, midlData.checkLoginCredentials, (req, res) => {
 
                 // Generate JWT token
                 const token = jwt.sign(
-                    { shop_id: user.shop_id, 
-                      mobile_number: user.mobile_number
+                    { 
+                        shop_id: user.shop_id,
+                        mobile_number: user.mobile_number                        
                     },
                     JWT_SECRET_KEY,
                     { expiresIn: JWT_TOKEN_EXPIRY_TIME } // Token expiry time
@@ -98,7 +99,13 @@ router.post(`${LOGIN_USER_API}`, midlData.checkLoginCredentials, (req, res) => {
                     console.log("LoggedIn Data=", result)
                     res.status(SUCCESS_STATUS_CODE).json({ 
                         message: 'Login successful', 
-                        shopData: {shop_id: user.shop_id, shop_name: user.shop_name}, 
+                        shopData: {
+                            shop_id: user.shop_id, 
+                            shop_name: user.shop_name,
+                            mobile_number: user.mobile_number,
+                            review_page_url: "http://crichunterlytics.com/",
+                            reports_page_url: "http://crichunterlytics.com/"
+                        }, 
                         token });
                 });
             }      

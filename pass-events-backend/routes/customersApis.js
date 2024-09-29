@@ -27,88 +27,9 @@ const {
     UPDATE_EVENT_PAYMENTS_API
 } = require("../constants/constant.js");
 
-// POST API : Add New Event Type
+// POST API: Add New Event Type
 router.post(`${ADD_CUSTOMER_API}`, midlData.verifyToken, async (req, res) => {
-    const { 
-        customer_name,
-        customer_number,
-        event_address,
-        shop_id,
-        event_id,
-        event_name,
-        theme_id,
-        theme_name,
-        total_amount,
-        advance_amount,
-        remaining_amount,
-        event_description,
-        event_datetime,
-        event_status,
-      } = req.body;
-    
-    try {
-        // Insert the user into the database
-        const sql = `
-            INSERT INTO ${PSS_EVENT_CUSTOMERS} (
-              customer_name,
-              customer_number,
-              event_address,
-              shop_id,
-              event_id,
-              event_name,
-              theme_id,
-              theme_name,
-              total_amount,
-              advance_amount,
-              remaining_amount,
-              event_description,
-              event_datetime,
-              event_status,
-              loyalty_amount
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-        db.query(sql, [
-          customer_name,
-          customer_number,
-          event_address,
-          shop_id,
-          event_id,
-          event_name,
-          theme_id,
-          theme_name,
-          total_amount,
-          advance_amount,
-          remaining_amount,
-          event_description,
-          event_datetime,
-          event_status,
-          loyalty_amount || 0
-        ], (err, result) => {
-          console.log(err);
-          console.log(result)
-            if (err) {
-                return res.status(BAD_REQUEST_CODE).json({ 
-                    error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE],
-                    status_code: BAD_REQUEST_CODE
-                });
-            }
-            res.status(SUCCESS_STATUS_CODE).json({ 
-                status_code: SUCCESS_STATUS_CODE,
-                message: SUCCESS_ADD_CUSTOMER_MSG
-            });
-        });
-    } catch (err) {
-        res.status(INTERNAL_SERVER_ERROR).json({
-            error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR],
-            status_code: INTERNAL_SERVER_ERROR
-        });    
-    }
-});
-
-// PUT API : Update Event Type 
-router.put(`${UPDATE_CUSTOMER_API}`, midlData.verifyToken, async (req, res) => {
-    const { 
+  const { 
       customer_name,
       customer_number,
       event_address,
@@ -124,30 +45,119 @@ router.put(`${UPDATE_CUSTOMER_API}`, midlData.verifyToken, async (req, res) => {
       event_datetime,
       event_status,
       loyalty_amount,
+      banquet_id = 0, // Default to 0 if not provided
+      banquet_name = null // Default to NULL if not provided
+  } = req.body;
+
+  try {
+      // Insert the user into the database
+      const sql = `
+          INSERT INTO ${PSS_EVENT_CUSTOMERS} (
+              customer_name,
+              customer_number,
+              event_address,
+              shop_id,
+              event_id,
+              event_name,
+              theme_id,
+              theme_name,
+              total_amount,
+              advance_amount,
+              remaining_amount,
+              event_description,
+              event_datetime,
+              event_status,
+              banquet_id,
+              banquet_name,
+              loyalty_amount
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+      db.query(sql, [
+          customer_name,
+          customer_number,
+          event_address,
+          shop_id,
+          event_id,
+          event_name,
+          theme_id,
+          theme_name,
+          total_amount,
+          advance_amount,
+          remaining_amount,
+          event_description,
+          event_datetime,
+          event_status,
+          banquet_id,
+          banquet_name,
+          loyalty_amount || 0
+      ], (err, result) => {
+          if (err) {
+              return res.status(BAD_REQUEST_CODE).json({ 
+                  error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE],
+                  status_code: BAD_REQUEST_CODE
+              });
+          }
+          res.status(SUCCESS_STATUS_CODE).json({ 
+              status_code: SUCCESS_STATUS_CODE,
+              message: SUCCESS_ADD_CUSTOMER_MSG
+          });
+      });
+  } catch (err) {
+      res.status(INTERNAL_SERVER_ERROR).json({
+          error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR],
+          status_code: INTERNAL_SERVER_ERROR
+      });    
+  }
+});
+
+// PUT API: Update Event Type 
+router.put(`${UPDATE_CUSTOMER_API}`, midlData.verifyToken, async (req, res) => {
+  const { 
+      customer_name,
+      customer_number,
+      event_address,
+      shop_id,
+      event_id,
+      event_name,
+      theme_id,
+      theme_name,
+      total_amount,
+      advance_amount,
+      remaining_amount,
+      event_description,
+      event_datetime,
+      event_status,
+      loyalty_amount,
+      banquet_id = 0, // Default to 0 if not provided
+      banquet_name = null, // Default to NULL if not provided
       customer_id
-    } = req.body;
-    
-    try {
-        // Update the product in the database
-        const sql = `
-            UPDATE ${PSS_EVENT_CUSTOMERS}
-            SET 
-            customer_name = ?,
-            customer_number = ?,
-            event_address = ?,
-            event_id = ?,
-            event_name = ?,
-            theme_id = ?,
-            theme_name = ?,
-            total_amount = ?,
-            advance_amount = ?,
-            remaining_amount = ?,
-            event_description = ?,
-            event_datetime = ?,
-            event_status = ?,
-            loyalty_amount = ?   
-            WHERE shop_id = ? AND customer_id = ?`;
-        db.query(sql, [
+  } = req.body;
+
+  try {
+      // Update the product in the database
+      const sql = `
+          UPDATE ${PSS_EVENT_CUSTOMERS}
+          SET 
+              customer_name = ?,
+              customer_number = ?,
+              event_address = ?,
+              event_id = ?,
+              event_name = ?,
+              theme_id = ?,
+              theme_name = ?,
+              total_amount = ?,
+              advance_amount = ?,
+              remaining_amount = ?,
+              event_description = ?,
+              event_datetime = ?,
+              event_status = ?,
+              banquet_id = ?,
+              banquet_name = ?,
+              loyalty_amount = ?   
+          WHERE shop_id = ? AND customer_id = ?`;
+
+      db.query(sql, [
           customer_name,
           customer_number,
           event_address,
@@ -161,33 +171,35 @@ router.put(`${UPDATE_CUSTOMER_API}`, midlData.verifyToken, async (req, res) => {
           event_description,
           event_datetime,
           event_status,
+          banquet_id,
+          banquet_name,
           loyalty_amount,
           shop_id,
           customer_id
-        ], (err, result) => {
-            if (err) {
-                return res.status(BAD_REQUEST_CODE).json({ 
-                    error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE],
-                    status_code: BAD_REQUEST_CODE
-                });
-            }
-            if (result.affectedRows === 0) {
-                return res.status(NOT_FOUND_CODE).json({
-                    status_code: NOT_FOUND_CODE,
-                    message: 'Assignee Not Found'
-                });
-            }
-            res.status(SUCCESS_STATUS_CODE).json({ 
-                status_code: SUCCESS_STATUS_CODE,
-                message: SUCCESS_UPDATE_CUSTOMER_MSG 
-            });
-        });
-    } catch (err) {
-        res.status(INTERNAL_SERVER_ERROR).json({ 
-            error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR],
-            status_code: INTERNAL_SERVER_ERROR
-        });
-    }
+      ], (err, result) => {
+          if (err) {
+              return res.status(BAD_REQUEST_CODE).json({ 
+                  error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE],
+                  status_code: BAD_REQUEST_CODE
+              });
+          }
+          if (result.affectedRows === 0) {
+              return res.status(NOT_FOUND_CODE).json({
+                  status_code: NOT_FOUND_CODE,
+                  message: 'Assignee Not Found'
+              });
+          }
+          res.status(SUCCESS_STATUS_CODE).json({ 
+              status_code: SUCCESS_STATUS_CODE,
+              message: SUCCESS_UPDATE_CUSTOMER_MSG 
+          });
+      });
+  } catch (err) {
+      res.status(INTERNAL_SERVER_ERROR).json({ 
+          error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR],
+          status_code: INTERNAL_SERVER_ERROR
+      });
+  }
 });
 
 // PUT API : Update Event Type 
@@ -417,8 +429,12 @@ router.get(`${GET_EVENT_THEME_CUSTOMER_API}`, midlData.verifyToken, (req, res, n
 });
 
 router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, next) => {
-  const { shop_id, event_status_list} = req.params;
+  const { shop_id, event_status_list, start_date, end_date, event_id, 
+    banquet_id,
+    theme_id } = req.query;
   let sqlQuery = '';
+  let queryParams = [shop_id];
+
   if (event_status_list === 'old_events') {
     // Get past events including today's that occurred earlier than the current time
     sqlQuery = `SELECT * 
@@ -426,32 +442,46 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
        WHERE s.shop_id = ? 
        AND (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) < CURDATE() 
        OR (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
-           AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) < CURTIME())) 
-       ORDER BY s.customer_id DESC`;
+           AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) < CURTIME()))`;
   } else {
-    // // Get upcoming events, including those happening later today 3 days data
-    // sqlQuery = `SELECT * 
-    //    FROM ${PSS_EVENT_CUSTOMERS} s 
-    //    WHERE s.shop_id = ? 
-    //    AND s.event_status = 'next_coming' 
-    //    AND ((DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
-    //        AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) >= CURTIME()) 
-    //     OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 10 DAY 
-    //     OR DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() + INTERVAL 20 DAY) 
-    //    ORDER BY s.customer_id DESC`;
-    
     // Get upcoming events for the next 20 days, including today's upcoming events
     sqlQuery = `SELECT * 
        FROM ${PSS_EVENT_CUSTOMERS} s 
        WHERE s.shop_id = ? 
        AND s.event_status = 'next_coming' 
-       AND (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) BETWEEN CURDATE() AND CURDATE() + INTERVAL 20 DAY) 
-       ORDER BY s.customer_id DESC`;
+       AND (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) BETWEEN CURDATE() AND CURDATE() + INTERVAL 20 DAY)`;
   }
+
+  // Add filter for start_date and end_date (timestamps)
+  if (start_date && end_date) {
+    sqlQuery += ` AND s.event_datetime BETWEEN ? AND ?`;
+    queryParams.push(start_date, end_date);
+  }
+
+  // Add filter for event_id
+  if (event_id) {
+    sqlQuery += ` AND s.event_id = ?`;
+    queryParams.push(event_id);
+  }
+
+  // Add filter for theme_id
+  if (theme_id) {
+    sqlQuery += ` AND s.theme_id = ?`;
+    queryParams.push(theme_id);
+  }
+
+  //Add filter for banquet_id
+  if(banquet_id) {
+    sqlQuery += ` AND s.banquet_id = ?`;
+    queryParams.push(banquet_id);
+  }
+
+  // Add ordering
+  sqlQuery += ` ORDER BY s.customer_id DESC`;
 
   db.query(
     sqlQuery,
-    [shop_id],
+    queryParams,
     function (error, results, fields) {
       if (error) {
         return res.status(BAD_REQUEST_CODE).send({
@@ -469,6 +499,7 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
     }
   );
 });
+
 
 router.get(`${GET_EVENT_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, next) => {
   const { shop_id, event_id } = req.params;
