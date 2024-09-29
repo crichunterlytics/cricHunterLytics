@@ -47,6 +47,7 @@ const GET_EVENT_ASSIGNEE = '/getEventAssignees/:shop_id/:event_id';
 const ADD_CUSTOMER_API = '/add_customer';
 const UPDATE_CUSTOMER_API = '/update_customer';
 const UPDATE_EVENT_STATUS_API = '/update_event_status';
+const UPDATE_EVENT_PAYMENTS_API = '/update_payments';
 const UPDATE_EVENT_ASSIGNEE_API = '/update_event_assignee';
 const GET_ALL_CUSTOMER_API = '/getAllCustomers/:shop_id';
 const GET_ALL_UPCOMING_EVENT_API = '/get_all_upcoming_events/:shop_id/:event_status_list';
@@ -181,6 +182,7 @@ module.exports = {
     ADD_CUSTOMER_API,    
     UPDATE_CUSTOMER_API,
     UPDATE_EVENT_STATUS_API,
+    UPDATE_EVENT_PAYMENTS_API,
     UPDATE_EVENT_ASSIGNEE_API,
     GET_ALL_CUSTOMER_API,
     GET_ALL_UPCOMING_EVENT_API,

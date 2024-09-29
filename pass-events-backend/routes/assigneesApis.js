@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../lib/db.js");
 const midlData = require('../middleware/token_interpreter.js');
+const { executeQuery } = require("../utils/executeQuery.js");
 
 const {  
     BAD_REQUEST_CODE, 
@@ -26,7 +26,6 @@ router.post(`${ADD_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
     } = req.body;
     
     try {
-        // Insert the user into the database
         const sql = `
             INSERT INTO ${PSS_EVENT_ASSIGNEES} (
                 assignee_name, 
@@ -35,23 +34,11 @@ router.post(`${ADD_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
             )
             VALUES (?, ?, ?)`;
 
-        db.query(sql, [
-            assignee_name,
-            mobile_number, 
-            shop_id
-        ], (err, result) => {
-          console.log(err);
-          console.log(result)
-            if (err) {
-                return res.status(BAD_REQUEST_CODE).json({ 
-                    status_code: BAD_REQUEST_CODE,
-                    error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
-                });
-            }
-            res.status(SUCCESS_STATUS_CODE).json({ 
-                status_code: SUCCESS_STATUS_CODE,
-                message: SUCCESS_ADD_ASSIGNEE_MSG
-            });
+        const result = await executeQuery(sql, [assignee_name, mobile_number, shop_id]);
+
+        res.status(SUCCESS_STATUS_CODE).json({ 
+            status_code: SUCCESS_STATUS_CODE,
+            message: SUCCESS_ADD_ASSIGNEE_MSG
         });
     } catch (err) {
         res.status(INTERNAL_SERVER_ERROR).json({
@@ -70,34 +57,24 @@ router.put(`${UPDATE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
     } = req.body;
     
     try {
-        // Update the product in the database
         const sql = `
             UPDATE ${PSS_EVENT_ASSIGNEES}
             SET 
                 assignee_name = ?,
                 mobile_number = ?      
             WHERE shop_id = ?`;
-        db.query(sql, [
-            assignee_name,
-            mobile_number,
-            shop_id
-        ], (err, result) => {
-            if (err) {
-                return res.status(BAD_REQUEST_CODE).json({ 
-                    status_code: BAD_REQUEST_CODE,
-                    error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
-                });
-            }
-            if (result.affectedRows === 0) {
-                return res.status(NOT_FOUND_CODE).json({
-                    status_code: NOT_FOUND_CODE,
-                    message: 'Assignee Not Found'
-                });
-            }
-            res.status(SUCCESS_STATUS_CODE).json({ 
-                status_code: SUCCESS_STATUS_CODE,
-                message: SUCCESS_UPDATE_ASSIGNEE_MSG
+        const result = await executeQuery(sql, [assignee_name, mobile_number, shop_id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(NOT_FOUND_CODE).json({
+                status_code: NOT_FOUND_CODE,
+                message: 'Assignee Not Found'
             });
+        }
+
+        res.status(SUCCESS_STATUS_CODE).json({ 
+            status_code: SUCCESS_STATUS_CODE,
+            message: SUCCESS_UPDATE_ASSIGNEE_MSG
         });
     } catch (err) {
         res.status(INTERNAL_SERVER_ERROR).json({
@@ -108,75 +85,57 @@ router.put(`${UPDATE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
 });
 
 // API : Get Event Assignee
-router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
+router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, async (req, res, next) => {
     const { shop_id, event_id } = req.params;
-      db.query(
-        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ? AND s.event_id = ? ORDER BY assignee_id DESC`,
-        [shop_id, event_id],
-        function (error, results, fields) {
-          if (error) {
-            return res.status(BAD_REQUEST_CODE).send({
-              msg: error,
-              err: true,
-              status_code: BAD_REQUEST_CODE,
-              data: []
-            });
-          }
-          return res.status(SUCCESS_STATUS_CODE).send({
+    
+    try {
+        const sql = `
+            SELECT * FROM ${PSS_EVENT_ASSIGNEES} 
+            WHERE shop_id = ? AND event_id = ? 
+            ORDER BY assignee_id DESC`;
+        
+        const results = await executeQuery(sql, [shop_id, event_id]);
+        
+        res.status(SUCCESS_STATUS_CODE).send({
             data: results,
             err: false,
             status_code: SUCCESS_STATUS_CODE
-          });
-        }
-      );
-});
-
-// API : Get Event Assignee
-router.get(`${GET_EVENT_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
-    const { shop_id, event_id } = req.params;
-      db.query(
-        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ? AND s.event_id = ? ORDER BY assignee_id DESC`,
-        [shop_id, event_id],
-        function (error, results, fields) {
-          if (error) {
-            return res.status(BAD_REQUEST_CODE).send({
-              msg: error,
-              err: true,
-              status_code: BAD_REQUEST_CODE,
-              data: []
-            });
-          }
-          return res.status(SUCCESS_STATUS_CODE).send({
-            data: results,
-            err: false,
-            status_code: SUCCESS_STATUS_CODE
-          });
-        }
-      );
+        });
+    } catch (error) {
+        res.status(BAD_REQUEST_CODE).send({
+            msg: error,
+            err: true,
+            status_code: BAD_REQUEST_CODE,
+            data: []
+        });
+    }
 });
 
 // API : Get ALL Assignee
-router.get(`${GET_ALL_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
+router.get(`${GET_ALL_ASSIGNEE}`, midlData.verifyToken, async (req, res, next) => {
     const { shop_id } = req.params;
-      db.query(
-        `SELECT * FROM ${PSS_EVENT_ASSIGNEES} s WHERE s.shop_id = ? ORDER BY assignee_id DESC`,
-        [shop_id],
-        function (error, results, fields) {
-          if (error) {
-            return res.status(BAD_REQUEST_CODE).send({
-              msg: error,
-              err: true,
-              status_code: BAD_REQUEST_CODE,
-              data: []
-            });
-          }
-          return res.status(SUCCESS_STATUS_CODE).send({
+    
+    try {
+        const sql = `
+            SELECT * FROM ${PSS_EVENT_ASSIGNEES} 
+            WHERE shop_id = ? 
+            ORDER BY assignee_id DESC`;
+        
+        const results = await executeQuery(sql, [shop_id]);
+        
+        res.status(SUCCESS_STATUS_CODE).send({
             data: results,
             err: false,
             status_code: SUCCESS_STATUS_CODE
-          });
-        }
-      );
+        });
+    } catch (error) {
+        res.status(BAD_REQUEST_CODE).send({
+            msg: error,
+            err: true,
+            status_code: BAD_REQUEST_CODE,
+            data: []
+        });
+    }
 });
 
 module.exports = router;
