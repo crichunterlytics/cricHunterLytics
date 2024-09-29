@@ -23,6 +23,7 @@ const executeQuery = (sql, params, res, successMessage) => {
       return res.status(SUCCESS_STATUS_CODE).json({
         status_code: SUCCESS_STATUS_CODE,
         message: successMessage,
+        data: result
       });
     }).catch(err => {
       res.status(INTERNAL_SERVER_ERROR).json({
