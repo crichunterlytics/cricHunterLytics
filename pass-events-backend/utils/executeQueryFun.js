@@ -2,7 +2,7 @@ const { BAD_REQUEST_CODE, ERROR_MESSAGES_STATUS_CODE, SUCCESS_STATUS_CODE, INTER
 const db = require("../lib/db.js");
 
 // Helper function for database operations
-export const executeQuery = (sql, params, res, successMessage) => {
+const executeQuery = (sql, params, res, successMessage) => {
     return new Promise((resolve, reject) => {
       db.query(sql, params, (err, result) => {
         if (err) {
@@ -32,3 +32,6 @@ export const executeQuery = (sql, params, res, successMessage) => {
     });
   };
   
+  module.exports = {
+    executeQuery
+  };
