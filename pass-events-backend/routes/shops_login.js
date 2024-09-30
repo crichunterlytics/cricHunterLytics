@@ -103,8 +103,8 @@ router.post(`${LOGIN_USER_API}`, midlData.checkLoginCredentials, (req, res) => {
                             shop_id: user.shop_id, 
                             shop_name: user.shop_name,
                             mobile_number: user.mobile_number,
-                            review_page_url: "http://crichunterlytics.com/",
-                            reports_page_url: "http://crichunterlytics.com/"
+                            review_page_url: "http://eventreviews.bizshopmate.com",
+                            reports_page_url: "http://eventreports.bizshopmate.com"
                         }, 
                         token });
                 });
