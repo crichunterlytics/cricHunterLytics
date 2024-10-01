@@ -202,19 +202,24 @@ router.post(`${REMOVE_THEME_TYPE_SHOP_API}`, midlData.verifyToken, async (req, r
 // API: Get All PSS Event Types
 router.get(`${GET_ALL_PSS_THEMES_API}`, midlData.verifyToken, (req, res, next) => {
   const { event_id, shop_id } = req.query;
+  let queryParams = [];
 
   // Base query to filter by event_id
   let sqlQuery = `SELECT * FROM ${PSS_EVENT_THEMES_LIST} s WHERE`;
 
   if(event_id) {
-    sqlQuery += ` s.event_id = ?`
+    sqlQuery += ` s.event_id = ?`;
+    queryParams.push(event_id);
   }
 
   // If shop_id is provided, add conditions for restricted_themes
   if (shop_id && event_id) {
     sqlQuery += ` AND (s.restricted_themes = ? OR s.restricted_themes = 0)`;
+    queryParams.push(event_id);
+    queryParams.push(shop_id);
   } else if(shop_id) {
     sqlQuery += ` (s.restricted_themes = ? OR s.restricted_themes = 0)`;
+    queryParams.push(shop_id);
   }else if(!shop_id && !event_id) {
     sqlQuery += ` s.restricted_themes = 0`;
   }else {
@@ -224,7 +229,7 @@ router.get(`${GET_ALL_PSS_THEMES_API}`, midlData.verifyToken, (req, res, next) =
 
   db.query(
     sqlQuery,
-    shop_id ? [event_id, shop_id] : [event_id], // Provide shop_id as a parameter if it's present
+    queryParams, // Provide shop_id as a parameter if it's present
     function (error, results, fields) {
       if (error) {
         return res.status(BAD_REQUEST_CODE).send({
