@@ -5,6 +5,7 @@ const { JWT_SECRET_KEY, TOKEN_UNAUTHORIZED_CODE, TOKEN_INVALID_CODE } = require(
 module.exports = {
     verifyToken : (req, res, next) => {
         console.log("req=", req);
+        console.log(req.headers['user-agent']);
         return next();
         //Skip token verification for login and logout routes
         if (req.path === '/api/login' || 
