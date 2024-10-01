@@ -204,7 +204,11 @@ router.get(`${GET_ALL_PSS_THEMES_API}`, midlData.verifyToken, (req, res, next) =
   const { event_id, shop_id } = req.query;
 
   // Base query to filter by event_id
-  let sqlQuery = `SELECT * FROM ${PSS_EVENT_THEMES_LIST} s WHERE s.event_id = ?`;
+  let sqlQuery = `SELECT * FROM ${PSS_EVENT_THEMES_LIST} s WHERE`;
+
+  if(event_id) {
+    sqlQuery += ` AND s.event_id = ?`
+  }
 
   // If shop_id is provided, add conditions for restricted_themes
   if (shop_id) {
