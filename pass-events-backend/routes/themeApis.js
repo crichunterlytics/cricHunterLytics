@@ -137,6 +137,8 @@ router.post(`${ADD_SHOP_THEME_API}`, midlData.verifyToken, async (req, res) => {
             values.push([event_id, shop_id, theme_id]);
         });
 
+        console.log("values=", values);
+
         // Insert the user into the database with IGNORE for duplicates
         const sql = `
             INSERT IGNORE INTO ${PSS_SHOP_EVENT_THEMES_LIST} (
@@ -146,8 +148,8 @@ router.post(`${ADD_SHOP_THEME_API}`, midlData.verifyToken, async (req, res) => {
             ) VALUES ?`;
 
         db.query(sql, [values], (err, result) => {
-          console.log(err);
-          console.log(result);
+          console.log("err=", err);
+          console.log("result=",result);
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({
                     status_code: BAD_REQUEST_CODE,
