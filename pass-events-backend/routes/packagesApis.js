@@ -180,51 +180,19 @@ router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
     }
 
     // Prepare the SQL query
-    let sqlQuery = `SELECT * FROM ${PSS_PACKAGES_TABLE} WHERE shop_id = ?`;
-    const queryParams = [shop_id];
-
-    // Initialize a condition for additional filters
-    const conditions = [];
-
-    // Check if restricted_package is provided
-    if (restricted_package !== undefined) {
-        conditions.push(`restricted_package = ?`);
-        queryParams.push(restricted_package);
-    }
-
+    let sqlQuery = `SELECT * FROM ${PSS_PACKAGES_TABLE} WHERE (shop_id = ? OR restricted_package = ?)`;
+    const queryParams = [shop_id, shop_id];
+    
     // Check if event_id is provided
     if (event_id !== undefined) {
-        conditions.push(`event_id = ?`);
+        sqlQuery += ` AND event_id = ?`;
         queryParams.push(event_id);
     }
 
     // Check if theme_id is provided
     if (theme_id !== undefined) {
-        conditions.push(`theme_id = ?`);
+        sqlQuery += ` AND theme_id = ?`;
         queryParams.push(theme_id);
-    }
-
-    // Add conditions for including event_id = 0 and theme_id = 0
-    // We will modify the condition logic to achieve the desired results.
-    let additionalConditions = [];
-
-    if (event_id !== undefined) {
-        additionalConditions.push(`(event_id = ? OR (event_id = 0 AND theme_id = 0))`);
-        queryParams.push(event_id);
-    } else {
-        additionalConditions.push(`event_id = 0 AND theme_id = 0`);
-    }
-
-    if (theme_id !== undefined) {
-        additionalConditions.push(`theme_id = ?`);
-        queryParams.push(theme_id);
-    }
-
-    // Combine all conditions
-    if (conditions.length > 0 || additionalConditions.length > 0) {
-        sqlQuery += ` AND (`;
-        sqlQuery += conditions.concat(additionalConditions).join(' OR ');
-        sqlQuery += `)`;
     }
 
     console.log("sqlQuery=", sqlQuery);
