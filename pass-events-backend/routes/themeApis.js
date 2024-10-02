@@ -215,7 +215,7 @@ router.get(`${GET_ALL_PSS_THEMES_API}`, midlData.verifyToken, (req, res, next) =
   // If shop_id is provided, add conditions for restricted_themes
   if (shop_id && event_id) {
     sqlQuery += ` AND (s.restricted_themes = ? OR s.restricted_themes = 0)`;
-    queryParams.push(event_id);
+    // queryParams.push(event_id);
     queryParams.push(shop_id);
   } else if(shop_id) {
     sqlQuery += ` (s.restricted_themes = ? OR s.restricted_themes = 0)`;
