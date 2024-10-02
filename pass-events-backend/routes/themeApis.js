@@ -122,7 +122,7 @@ router.put(`${UPDATE_PSS_THEMES_API}`, midlData.verifyToken, async (req, res) =>
 // ADD PSS Shops Events
 router.post(`${ADD_SHOP_THEME_API}`, midlData.verifyToken, async (req, res) => {
     const themes = req.body; // Array of event-shop pairs
-    
+    console.log("themes data==", themes);
     if (!Array.isArray(themes) || themes.length === 0) {
         return res.status(BAD_REQUEST_CODE).json({
             status_code: BAD_REQUEST_CODE,
@@ -132,8 +132,8 @@ router.post(`${ADD_SHOP_THEME_API}`, midlData.verifyToken, async (req, res) => {
     
     try {
         const values = [];
-        themes.forEach(event => {
-            const { event_id, shop_id, theme_id } = event;
+        themes.forEach(tm => {
+            const { event_id, shop_id, theme_id } = tm;
             values.push([event_id, shop_id, theme_id]);
         });
 
