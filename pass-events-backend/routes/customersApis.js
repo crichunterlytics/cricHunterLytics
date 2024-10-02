@@ -92,6 +92,8 @@ router.post(`${ADD_CUSTOMER_API}`, midlData.verifyToken, async (req, res) => {
           banquet_name,
           loyalty_amount || 0
       ], (err, result) => {
+        console.log("err=", err);
+        console.log("result=", result);
           if (err) {
               return res.status(BAD_REQUEST_CODE).json({ 
                   error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE],
