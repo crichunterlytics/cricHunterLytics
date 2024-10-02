@@ -227,6 +227,8 @@ router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
         sqlQuery += `)`;
     }
 
+    console.log("sqlQuery=", sqlQuery);
+    console.log(queryParams)
     try {
         db.query(sqlQuery, queryParams, (err, results) => {
             if (err) {
