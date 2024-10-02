@@ -71,7 +71,7 @@ router.post(`${ADD_CUSTOMER_API}`, midlData.verifyToken, async (req, res) => {
               banquet_name,
               loyalty_amount
           )
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
       db.query(sql, [
           customer_name,
