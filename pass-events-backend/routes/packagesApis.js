@@ -170,7 +170,7 @@ router.delete(`${DELETE_PACKAGES_API}`, midlData.verifyToken, async (req, res) =
 
 // Get Packages
 router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
-    const { shop_id, restricted_package, event_id, theme_id } = req.query; // Get query parameters
+    const { shop_id, event_id, theme_id } = req.query; // Get query parameters
 
     if (!shop_id) {
         return res.status(BAD_REQUEST_CODE).json({
@@ -185,7 +185,7 @@ router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
     
     // Check if event_id is provided
     if (event_id !== undefined) {
-        sqlQuery += ` AND event_id = ?`;
+        sqlQuery += ` AND (event_id = 0 || event_id = ?`;
         queryParams.push(event_id);
     }
 
