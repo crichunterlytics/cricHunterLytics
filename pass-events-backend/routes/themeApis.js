@@ -141,7 +141,7 @@ router.post(`${ADD_SHOP_THEME_API}`, midlData.verifyToken, async (req, res) => {
 
         // Insert the user into the database with IGNORE for duplicates
         const sql = `
-            INSERT INTO ${PSS_SHOP_EVENT_THEMES_LIST} (
+            INSERT IGNORE INTO ${PSS_SHOP_EVENT_THEMES_LIST} (
                 event_id, 
                 shop_id,
                 theme_id
