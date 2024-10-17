@@ -438,7 +438,7 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
   let queryParams = [shop_id];
 
   if (event_status_list === 'old_events') {
-    // Get past events including today's that occurred earlier than the current time
+    // Get past events including those that occurred earlier today
     sqlQuery = `SELECT * 
        FROM ${PSS_EVENT_CUSTOMERS} s 
        WHERE s.shop_id = ? 
@@ -446,12 +446,17 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
        OR (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
            AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) < CURTIME()))`;
   } else {
-    // Get upcoming events for the next 20 days, including today's upcoming events
+    // Get upcoming events, including today's events that are either upcoming or ongoing
     sqlQuery = `SELECT * 
        FROM ${PSS_EVENT_CUSTOMERS} s 
        WHERE s.shop_id = ? 
        AND s.event_status = 'next_coming' 
-       AND (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) BETWEEN CURDATE() AND CURDATE() + INTERVAL 20 DAY)`;
+       AND (
+         (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) > CURDATE()) 
+         OR (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
+             AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) >= CURTIME())
+       ) 
+       AND DATE(FROM_UNIXTIME(s.event_datetime / 1000)) <= CURDATE() + INTERVAL 20 DAY`;
   }
 
   // Add filter for start_date and end_date (timestamps)
@@ -472,8 +477,8 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
     queryParams.push(theme_id);
   }
 
-  //Add filter for banquet_id
-  if(banquet_id) {
+  // Add filter for banquet_id
+  if (banquet_id) {
     sqlQuery += ` AND s.banquet_id = ?`;
     queryParams.push(banquet_id);
   }
@@ -501,6 +506,7 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
     }
   );
 });
+
 
 
 router.get(`${GET_EVENT_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, next) => {
