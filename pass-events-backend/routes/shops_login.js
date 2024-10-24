@@ -59,6 +59,73 @@ router.post(`${REGISTER_NEW_USER}`, midlData.checkAvailability, midlData.validat
     }
 });
 
+// PUT API: Update Shop Details
+router.put(`${UPDATE_SHOP_DETAILS}`, midlData.verifyToken, midlData.validateInput, async (req, res) => {
+    const { 
+        shop_name, 
+        owner_name, 
+        email_id, 
+        mobile_number, 
+        shop_address,
+        shop_city, 
+        shop_state, 
+        shop_zipcode,
+        registration_number,
+        shop_id // Add shop_id to identify which shop to update
+    } = req.body;
+
+    try {
+        // Update the shop details in the database
+        const sql = `
+            UPDATE ${PSS_USERS}
+            SET 
+                shop_name = ?,
+                owner_name = ?,
+                email_id = ?,
+                mobile_number = ?,
+                shop_address = ?,
+                shop_city = ?,
+                shop_state = ?,
+                shop_zipcode = ?,
+                registration_number = ?
+            WHERE shop_id = ?`;
+
+        db.query(sql, [
+            shop_name, 
+            owner_name, 
+            email_id, 
+            mobile_number, 
+            shop_address, 
+            shop_city, 
+            shop_state, 
+            shop_zipcode,
+            registration_number,
+            shop_id
+        ], (err, result) => {
+            if (err) {
+                return res.status(BAD_REQUEST_CODE).json({ 
+                    error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
+                });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.status(NOT_FOUND_CODE).json({
+                    status_code: NOT_FOUND_CODE,
+                    message: 'Shop not found'
+                });
+            }
+
+            res.status(SUCCESS_STATUS_CODE).json({ message: 'Shop details updated successfully' });
+        });
+    } catch (err) {
+        console.error('Error updating shop details: ' + err.stack);
+        res.status(INTERNAL_SERVER_ERROR).json({ 
+            error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
+        });
+    }
+});
+
+
 // POST API : Login API = "login"
 router.post(`${LOGIN_USER_API}`, midlData.checkLoginCredentials, (req, res) => {
     const { mobile_number, password } = req.body;

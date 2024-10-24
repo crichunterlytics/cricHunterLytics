@@ -15,6 +15,7 @@ const PSS_PACKAGES_TABLE = 'packages_data';
 
 //Login and signup level APIS
 const REGISTER_NEW_USER = '/register';
+const UPDATE_SHOP_DETAILS = '/update_shop_details';
 const LOGIN_USER_API = '/login';
 const GENERATE_NEW_TOKEN = '/getToken';
 const LOGOUT_API = '/logout';
@@ -159,6 +160,7 @@ module.exports = {
     RESET_PASSWORD_API,
     LOGOUT_API,
     REGISTER_NEW_USER,
+    UPDATE_SHOP_DETAILS,
     LOGIN_USER_API,
     FORGOT_PASSWORD_API,
 
