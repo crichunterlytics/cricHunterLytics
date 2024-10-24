@@ -40,6 +40,7 @@ const GET_ALL_SHOP_THEMES_API = '/get_shop_event_themes/:shop_id/:event_id';
 // Assignee APIs 
 const ADD_ASSIGNEE_API = '/add_assignee';
 const UPDATE_ASSIGNEE_API = '/update_assignee';
+const DELETE_ASSIGNEE_API = '/delete_assignee';
 const GET_ALL_ASSIGNEE = '/getEventAssignees/:shop_id';
 const GET_EVENT_ASSIGNEE = '/getEventAssignees/:shop_id/:event_id';
 
@@ -176,6 +177,7 @@ module.exports = {
 
     ADD_ASSIGNEE_API,    
     UPDATE_ASSIGNEE_API,
+    DELETE_ASSIGNEE_API,
     GET_ALL_ASSIGNEE,
     GET_EVENT_ASSIGNEE,
     GET_ALL_PSS_EVENTS_API,

@@ -14,7 +14,8 @@ const {
     PSS_EVENT_ASSIGNEES,
     GET_ALL_ASSIGNEE,
     SUCCESS_ADD_ASSIGNEE_MSG,
-    SUCCESS_UPDATE_ASSIGNEE_MSG
+    SUCCESS_UPDATE_ASSIGNEE_MSG,
+    DELETE_ASSIGNEE_API
 } = require("../constants/constant.js");
 
 // POST API : Add New Event Type
@@ -66,7 +67,7 @@ router.put(`${UPDATE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
     const { 
         assignee_name,
         mobile_number, 
-        shop_id
+        assignee_id
     } = req.body;
     
     try {
@@ -76,11 +77,11 @@ router.put(`${UPDATE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
             SET 
                 assignee_name = ?,
                 mobile_number = ?      
-            WHERE shop_id = ?`;
+            WHERE assignee_id = ?`;
         db.query(sql, [
             assignee_name,
             mobile_number,
-            shop_id
+            assignee_id
         ], (err, result) => {
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
@@ -178,5 +179,42 @@ router.get(`${GET_ALL_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
         }
       );
 });
+
+// DELETE API: Delete Assignee
+router.delete(`${DELETE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
+  const { assignee_id } = req.body;
+
+  try {
+      // Delete the assignee from the database
+      const sql = `
+          DELETE FROM ${PSS_EVENT_ASSIGNEES}
+          WHERE assignee_id = ?`;
+      
+      db.query(sql, [assignee_id], (err, result) => {
+          if (err) {
+              return res.status(BAD_REQUEST_CODE).json({
+                  status_code: BAD_REQUEST_CODE,
+                  error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
+              });
+          }
+          if (result.affectedRows === 0) {
+              return res.status(NOT_FOUND_CODE).json({
+                  status_code: NOT_FOUND_CODE,
+                  message: 'Assignee Not Found'
+              });
+          }
+          res.status(SUCCESS_STATUS_CODE).json({
+              status_code: SUCCESS_STATUS_CODE,
+              message: SUCCESS_DELETE_ASSIGNEE_MSG
+          });
+      });
+  } catch (err) {
+      res.status(INTERNAL_SERVER_ERROR).json({
+          status_code: INTERNAL_SERVER_ERROR,
+          error: ERROR_MESSAGES_STATUS_CODE[INTERNAL_SERVER_ERROR]
+      });
+  }
+});
+
 
 module.exports = router;
