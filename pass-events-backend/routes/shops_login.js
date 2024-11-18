@@ -6,7 +6,7 @@ const midlData = require('../middleware/signup_user.js');
 const mildLogout = require('../middleware/logout_user.js'); 
 const mildGenToken = require('../middleware/generate_token.js'); 
 const jwt = require('jsonwebtoken');
-const { RESET_PASSWORD_API, JWT_SECRET_KEY, JWT_TOKEN_EXPIRY_TIME, REGISTER_NEW_USER, PSS_USERS, BAD_REQUEST_CODE, ERROR_MESSAGES_STATUS_CODE, SUCCESS_STATUS_CODE, LOGIN_USER_API, INVALID_MOBILE_PASSWORD, GENERATE_NEW_TOKEN, LOGOUT_API, INTERNAL_SERVER_ERROR, FORGOT_PASSWORD_API, MOBILE_NUMBER_NOT_EXITS } = require("../constants/constant.js");
+const { RESET_PASSWORD_API, JWT_SECRET_KEY, JWT_TOKEN_EXPIRY_TIME, REGISTER_NEW_USER, PSS_USERS, BAD_REQUEST_CODE, ERROR_MESSAGES_STATUS_CODE, SUCCESS_STATUS_CODE, LOGIN_USER_API, INVALID_MOBILE_PASSWORD, GENERATE_NEW_TOKEN, LOGOUT_API, INTERNAL_SERVER_ERROR, FORGOT_PASSWORD_API, MOBILE_NUMBER_NOT_EXITS, UPDATE_SHOP_DETAILS } = require("../constants/constant.js");
 
 // POST API : To register a new user = "register"
 router.post(`${REGISTER_NEW_USER}`, midlData.checkAvailability, midlData.validateInput, async (req, res) => {
