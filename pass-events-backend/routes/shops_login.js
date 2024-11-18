@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../lib/db.js");
 const bcrypt = require('bcryptjs');
 const midlData = require('../middleware/signup_user.js');
+const midlTokenData = require('../middleware/token_interpreter.js');
 const mildLogout = require('../middleware/logout_user.js'); 
 const mildGenToken = require('../middleware/generate_token.js'); 
 const jwt = require('jsonwebtoken');
@@ -60,7 +61,7 @@ router.post(`${REGISTER_NEW_USER}`, midlData.checkAvailability, midlData.validat
 });
 
 // PUT API: Update Shop Details
-router.put(`${UPDATE_SHOP_DETAILS}`, midlData.verifyToken, midlData.validateInput, async (req, res) => {
+router.put(`${UPDATE_SHOP_DETAILS}`, midlTokenData.verifyToken, midlData.validateInput, async (req, res) => {
     const { 
         shop_name, 
         owner_name, 
