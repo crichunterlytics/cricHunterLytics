@@ -1,4 +1,4 @@
-const {PSS_USERS, INVALID_MOBILE_PASSWORD, BAD_REQUEST_CODE, ERROR_MESSAGES_STATUS_CODE, LOGIN_UNAUTHORIZED_CODE} = require('../constants/constant');
+const {PSS_USERS, BAD_REQUEST_CODE, ERROR_MESSAGES_STATUS_CODE, LOGIN_UNAUTHORIZED_CODE, INVALID_MOBILE_PASSWORD} = require('../constants/constant');
 const db = require("../lib/db.js");
 const bcrypt = require('bcryptjs');
 

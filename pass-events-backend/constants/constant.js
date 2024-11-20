@@ -78,6 +78,7 @@ const GET_PACKAGES_API = '/get_packages';
 
 //api RETURN STATUS CODE
 const BAD_REQUEST_CODE = 400;
+const INVALID_MOBILE_PASSWORD = 400;
 const UNAUTHORIZED_CODE = 401;
 const LOGIN_UNAUTHORIZED_CODE = 401;
 const TOKEN_UNAUTHORIZED_CODE = 401;
@@ -97,7 +98,8 @@ const ERROR_MESSAGES_STATUS_CODE = {
     FORBIDDEN_CODE: "Your account is locked. Please contact support.",
     INTERNAL_SERVER_ERROR: "An error occurred on the server",
     TOKEN_UNAUTHORIZED_CODE: "Invalid Token",
-    MOBILE_NUMBER_NOT_EXITS: "Mobile number does not exist."
+    MOBILE_NUMBER_NOT_EXITS: "Mobile number does not exist.",
+    INVALID_MOBILE_PASSWORD: "Mobile number or Email id already exists."
 }
 
 // Event APIs Messages
@@ -146,6 +148,7 @@ module.exports = {
     ERROR_MESSAGES_STATUS_CODE,
     MOBILE_NUMBER_NOT_EXITS,
     TOKEN_INVALID_CODE,
+    INVALID_MOBILE_PASSWORD,
 
     PSS_USERS,
     PSS_EVENTS_LIST,
