@@ -3,7 +3,8 @@ const pool = mysql.createPool({
     connectionLimit: 10,  // Limit the number of concurrent connections
     host: '184.168.109.23',
     user: 'rupalinile',
-    database: 'pss_event_management',
+    // database: 'pss_event_management', //Testing and stable database
+    database: 'events_bizshopmate', // Production database where the all entries leagle 
     password: 'Nile@Rupali2003',
     connectTimeout: 10000,  // 10 seconds
     acquireTimeout: 10000,  // 10 seconds
