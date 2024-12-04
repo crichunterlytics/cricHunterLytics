@@ -15,7 +15,8 @@ const {
     GET_ALL_ASSIGNEE,
     SUCCESS_ADD_ASSIGNEE_MSG,
     SUCCESS_UPDATE_ASSIGNEE_MSG,
-    DELETE_ASSIGNEE_API
+    DELETE_ASSIGNEE_API,
+    SUCCESS_DELETE_ASSIGNEE_MSG
 } = require("../constants/constant.js");
 
 // POST API : Add New Event Type

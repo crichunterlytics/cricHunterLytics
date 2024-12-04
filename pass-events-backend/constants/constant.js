@@ -114,6 +114,7 @@ const SUCCESS_UPDATE_THEME_MSG = "Event theme updated successfully."
 // Assignees APIs Messages
 const SUCCESS_ADD_ASSIGNEE_MSG = "Assignee added successfully."
 const SUCCESS_UPDATE_ASSIGNEE_MSG = "Assignee updated successfully."
+const SUCCESS_DELETE_ASSIGNEE_MSG = "Assignee deleted successfully."
 
 // Customers APIs Messages
 const SUCCESS_ADD_CUSTOMER_MSG = "Customer added successfully."
@@ -217,6 +218,7 @@ module.exports = {
     SUCCESS_UPDATE_THEME_MSG,
     SUCCESS_ADD_ASSIGNEE_MSG,
     SUCCESS_UPDATE_ASSIGNEE_MSG,
+    SUCCESS_DELETE_ASSIGNEE_MSG,
     SUCCESS_ADD_CUSTOMER_MSG,
     SUCCESS_UPDATE_CUSTOMER_MSG,
     SUCCESS_UPDATE_CUSTOMER_STATUS_MSG,
