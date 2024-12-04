@@ -104,7 +104,7 @@ router.put(`${UPDATE_BANQUET_API}`, midlData.verifyToken, async (req, res) => {
 
 // Delete Banquet
 router.delete(`${DELETE_BANQUET_API}`, midlData.verifyToken, async (req, res) => {
-    const { banquet_id } = req.body; // Expecting the id of the banquet to delete
+    const { banquet_id, shop_id} = req.body; // Expecting the id of the banquet to delete
 
     if (!banquet_id) {
         return res.status(BAD_REQUEST_CODE).json({
@@ -114,9 +114,9 @@ router.delete(`${DELETE_BANQUET_API}`, midlData.verifyToken, async (req, res) =>
     }
 
     try {
-        const sql = `DELETE FROM ${BANQUET_DATA_TABLE} WHERE banquet_id = ?`;
+        const sql = `DELETE FROM ${BANQUET_DATA_TABLE} WHERE banquet_id = ? AND shop_id = ?`;
 
-        db.query(sql, [banquet_id], (err, result) => {
+        db.query(sql, [banquet_id, shop_id], (err, result) => {
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({
                     status_code: BAD_REQUEST_CODE,
