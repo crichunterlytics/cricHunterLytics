@@ -184,15 +184,15 @@ router.get(`${GET_ALL_ASSIGNEE}`, midlData.verifyToken, (req, res, next) => {
 
 // DELETE API: Delete Assignee
 router.delete(`${DELETE_ASSIGNEE_API}`, midlData.verifyToken, async (req, res) => {
-  const { assignee_id } = req.body;
+  const { assignee_id, shop_id } = req.body;
 
   try {
       // Delete the assignee from the database
       const sql = `
           DELETE FROM ${PSS_EVENT_ASSIGNEES}
-          WHERE assignee_id = ?`;
+          WHERE assignee_id = ? AND shop_id = ?`;
       
-      db.query(sql, [assignee_id], (err, result) => {
+      db.query(sql, [assignee_id, shop_id], (err, result) => {
           if (err) {
               return res.status(BAD_REQUEST_CODE).json({
                   status_code: BAD_REQUEST_CODE,
