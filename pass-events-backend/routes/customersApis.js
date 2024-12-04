@@ -447,10 +447,19 @@ router.get(`${GET_ALL_UPCOMING_EVENT_API}`, midlData.verifyToken, (req, res, nex
            AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) < CURTIME()))`;
   } else {
     // Get upcoming events, including today's events that are either upcoming or ongoing
+    // sqlQuery = `SELECT * 
+    //    FROM ${PSS_EVENT_CUSTOMERS} s 
+    //    WHERE s.shop_id = ? 
+    //   AND s.event_status = 'next_coming' 
+    //    AND (
+    //      (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) > CURDATE()) 
+    //      OR (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
+    //          AND TIME(FROM_UNIXTIME(s.event_datetime / 1000)) >= CURTIME())
+    //    ) 
+    //    AND DATE(FROM_UNIXTIME(s.event_datetime / 1000)) <= CURDATE() + INTERVAL 20 DAY`;
     sqlQuery = `SELECT * 
        FROM ${PSS_EVENT_CUSTOMERS} s 
        WHERE s.shop_id = ? 
-       AND s.event_status = 'next_coming' 
        AND (
          (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) > CURDATE()) 
          OR (DATE(FROM_UNIXTIME(s.event_datetime / 1000)) = CURDATE() 
