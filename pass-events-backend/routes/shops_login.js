@@ -168,13 +168,12 @@ router.post(`${LOGIN_USER_API}`, midlData.checkLoginCredentials, (req, res) => {
                     res.status(SUCCESS_STATUS_CODE).json({ 
                         message: 'Login successful', 
                         shopData: {
-                            shop_id: user.shop_id, 
-                            shop_name: user.shop_name,
-                            mobile_number: user.mobile_number,
+                            data: user,
                             review_page_url: "https://eventreviews.bizshopmate.com",
                             reports_page_url: "https://eventreports.bizshopmate.com"
                         }, 
-                        token });
+                        token 
+                    });
                 });
             }      
         });
