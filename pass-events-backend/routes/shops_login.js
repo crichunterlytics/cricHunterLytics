@@ -116,7 +116,22 @@ router.put(`${UPDATE_SHOP_DETAILS}`, midlTokenData.verifyToken, midlData.validat
                 });
             }
 
-            res.status(SUCCESS_STATUS_CODE).json({ message: 'Shop details updated successfully' });
+             // If update is successful, fetch all user data
+             const sqlFetchAll = `SELECT * FROM ${PSS_USERS} where shop_id=?`;
+             db.query(sqlFetchAll, [shop_id], (err, rows) => {
+                 if (err) {
+                     return res.status(BAD_REQUEST_CODE).json({ 
+                         error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
+                     });
+                 }
+ 
+                 res.status(SUCCESS_STATUS_CODE).json({ 
+                     message: 'Shop details updated successfully',
+                     data: rows[0] // Return all user data
+                 });
+             });
+
+            // res.status(SUCCESS_STATUS_CODE).json({ message: 'Shop details updated successfully' });
         });
     } catch (err) {
         console.error('Error updating shop details: ' + err.stack);
