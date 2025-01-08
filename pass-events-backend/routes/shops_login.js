@@ -104,6 +104,7 @@ router.put(`${UPDATE_SHOP_DETAILS}`, midlTokenData.verifyToken, async (req, res)
             shop_id
         ], (err, result) => {
             console.log("Error==", err);
+            console.log("result=", result);
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
                     error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
