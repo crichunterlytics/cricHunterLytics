@@ -130,7 +130,11 @@ router.put(`${UPDATE_SHOP_DETAILS}`, midlTokenData.verifyToken, async (req, res)
  
                  res.status(SUCCESS_STATUS_CODE).json({ 
                      message: 'Shop details updated successfully',
-                     data: rows[0] // Return all user data
+                     shopData: {
+                        data: rows[0],
+                        review_page_url: "https://eventreviews.bizshopmate.com",
+                        reports_page_url: "https://eventreports.bizshopmate.com"
+                    },
                  });
              });
 
