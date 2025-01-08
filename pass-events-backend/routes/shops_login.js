@@ -62,6 +62,7 @@ router.post(`${REGISTER_NEW_USER}`, midlData.checkAvailability, midlData.validat
 
 // PUT API: Update Shop Details
 router.put(`${UPDATE_SHOP_DETAILS}`, midlTokenData.verifyToken, async (req, res) => {
+    console.log("Request Payload ==", req.body);
     const { 
         shop_name, 
         owner_name, 
