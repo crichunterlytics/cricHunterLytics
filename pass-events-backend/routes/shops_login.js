@@ -11,6 +11,7 @@ const { RESET_PASSWORD_API, JWT_SECRET_KEY, JWT_TOKEN_EXPIRY_TIME, REGISTER_NEW_
 
 // POST API : To register a new user = "register"
 router.post(`${REGISTER_NEW_USER}`, midlData.checkAvailability, midlData.validateInput, async (req, res) => {
+    console.log("Request Body for create=", req.body);
     const { 
         shop_name, 
         owner_name, 
@@ -30,7 +31,17 @@ router.post(`${REGISTER_NEW_USER}`, midlData.checkAvailability, midlData.validat
 
         // Insert the user into the database
         const sql = `
-            INSERT INTO ${PSS_USERS} (shop_name, owner_name, email_id, mobile_number, password_hash, shop_address, shop_city, shop_state, shop_zipcode, registration_number)
+            INSERT INTO ${PSS_USERS} (
+                shop_name, 
+                owner_name, 
+                email_id, 
+                mobile_number, 
+                password_hash, 
+                shop_address, 
+                shop_city, 
+                shop_state, 
+                shop_zipcode, 
+                registration_number)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         db.query(sql, [
@@ -44,7 +55,8 @@ router.post(`${REGISTER_NEW_USER}`, midlData.checkAvailability, midlData.validat
             shop_state, 
             shop_zipcode,
             registration_number], (err, result) => {
-                console.log(err)
+                console.log("Errors found==", err);
+                console.log("Result=", result);
             if (err) {
                 return res.status(BAD_REQUEST_CODE).json({ 
                     error: ERROR_MESSAGES_STATUS_CODE[BAD_REQUEST_CODE]
