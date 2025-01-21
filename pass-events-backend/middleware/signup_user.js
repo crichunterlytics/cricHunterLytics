@@ -85,6 +85,7 @@ module.exports = {
 
     // Middleware to validate username, password, and confirm password
     validateInput : (req, res, next) => {
+        console.log("Request ==", req.body);
         const { password, confirm_password } = req.body;
 
         // Check password length
