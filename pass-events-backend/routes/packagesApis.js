@@ -188,9 +188,9 @@ router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
         sqlQuery += ` AND (event_id = 0 OR event_id = ?)`;
         queryParams.push(event_id);
     }
-    else {
-        sqlQuery += ` AND event_id = 0`;
-    }
+    // else {
+    //     sqlQuery += ` AND event_id = 0`;
+    // }
 
     // Check if theme_id is provided
     if (theme_id !== undefined) {
