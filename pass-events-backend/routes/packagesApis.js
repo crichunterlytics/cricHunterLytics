@@ -181,7 +181,7 @@ router.get(`${GET_PACKAGES_API}`, midlData.verifyToken, async (req, res) => {
 
     // Prepare the SQL query
     let sqlQuery = `SELECT * FROM ${PSS_PACKAGES_TABLE} WHERE (shop_id = ? OR restricted_package = ?)`;
-    const queryParams = [0, shop_id];
+    const queryParams = [shop_id];
     
     // Check if event_id is provided
     if (event_id !== undefined) {
